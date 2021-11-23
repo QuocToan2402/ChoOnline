@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Product from '../components/Product';
-import LoadingBox from '../components/LoadingBox';
-import MessageBox from '../components/MessageBox';
-import data from '../data';
+import React, { useEffect } from "react";
+
+import Product from "../components/Product";
+import LoadingBox from "../components/LoadingBox";
+import MessageBox from "../components/MessageBox";
+import { useDispatch, useSelector } from "react-redux";
+import { listProducts } from "../actions/productActions";
 
 export default function HomeScreen() {
-  const [products, setProducts] = useState([]); //use react hook to manage state of component, change value of product use setproduct fuc
+  /*const [products, setProducts] = useState([]); //use react hook to manage state of component, change value of product use setproduct fuc
   const [loading, setLoading] = useState(false); //show loading 
   const [error, setError] = useState(false);  //show error if cant't get data
 
@@ -24,7 +25,14 @@ export default function HomeScreen() {
       }
     };
     fetchData();
-  }, []); //
+  }, []); //*/
+  const dispatch = useDispatch();
+  const productList = useSelector((state) => state.productList); //useSelector is function redux
+  const { loading, error, products } = productList; //value from redux list
+
+  useEffect(() => {
+    dispatch(listProducts()); //dispatch action
+  }, [dispatch]);
 
   return (
     <div>
@@ -32,7 +40,8 @@ export default function HomeScreen() {
         <LoadingBox></LoadingBox>
       ) : error ? ( // if has error, render message
         <MessageBox variant="danger">{error}</MessageBox>
-      ) : ( // after loading and no error, render product
+      ) : (
+        // after loading and no error, render product
         <div className="row center">
           {products.map((product) => (
             <Product key={product._id} product={product}></Product>
