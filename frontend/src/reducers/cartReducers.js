@@ -1,4 +1,4 @@
-import { CART_ADD_ITEM } from "../constants/cartConstants";
+import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../constants/cartConstants";
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
   //
@@ -9,7 +9,7 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
       if (existItem) {
         //if exist
         return {
-          //not change other properies
+          //not change other poperies
           ...state,
           //replace new item and update, update compare item, don't change other
           cartItems: state.cartItems.map((x) =>
@@ -20,6 +20,13 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
         //dont change other item and add new item in cart, concat item to cartItems
         return { ...state, cartItems: [...state.cartItems, item] };
       }
+    case CART_REMOVE_ITEM:
+      return {
+        //not change other poperies
+        ...state,
+        //compare with action payload data
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
     default:
       return state; //default is empty array
   }
