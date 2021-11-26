@@ -18,7 +18,10 @@
   },
   "homepage": "https://github.com/QuocToan2402/ECommerce#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.2.0",
+    "mongoose": "^6.0.13"
   },
   "devDependencies": {
     "eslint": "^8.3.0",
