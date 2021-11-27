@@ -22,6 +22,7 @@ const initialState = {
     shippingAddress: localStorage.getItem('shippingAddress')//check shippingaddress from local
       ? JSON.parse(localStorage.getItem('shippingAddress'))//if exist convert to json
       : {},//else, return null and user fill shipping input 
+    paymentMethod: 'PayPal',//set initial value, default is paypal
   },
 
 }; //
@@ -32,6 +33,7 @@ const reducer = combineReducers({
   cart: cartReducer, //cart reducer
   userSignin: userSigninReducer,
   userRegister: userRegisterReducer,
+
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // define compose cho redux devtool
 const store = createStore(
