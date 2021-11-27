@@ -5,8 +5,16 @@ import {
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
+import { userSigninReducer } from "./reducers/userReducers";
 
 const initialState = {
+  //check user exist
+  userSignin: {
+    userInfo: localStorage.getItem('userInfo')
+      ? JSON.parse(localStorage.getItem('userInfo'))
+      : null,
+  },
+  //check cart from local
   cart: {
     cartItems: localStorage.getItem("cartItems") //get cartItems from localStorage by ID
       ? JSON.parse(localStorage.getItem("cartItems")) //convert from array to json
@@ -18,6 +26,8 @@ const reducer = combineReducers({
   productList: productListReducer, //use product list reducer.
   productDetails: productDetailsReducer, //use product detail reducer.
   cart: cartReducer, //cart reducer
+  userSignin: userSigninReducer,
+
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // define compose cho redux devtool
 const store = createStore(
