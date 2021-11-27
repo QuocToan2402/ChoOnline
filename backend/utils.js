@@ -15,4 +15,27 @@ export const generateToken = (user) => {
       expiresIn: '30d',//exp 30day
     }
   );
+
+};
+
+//middleware to author request
+export const isAuth = (req, res, next) => {
+  const authorization = req.headers.authorization;//get authorization from header of request
+  if (authorization) {//if exist, get token
+    const token = authorization.slice(7, authorization.length); // Bearer XXXXXX
+    jwt.verify(//use jwt to decrypt token
+      token,
+      process.env.JWT_SECRET || 'somethingsecret',
+      (err, decode) => {
+        if (err) {//token invalid, 
+          res.status(401).send({ message: 'Invalid Token' });//response
+        } else {//token correct, decode user info
+          req.user = decode;
+          next();//after that, send user as a props of req to the next middleware
+        }
+      }
+    );
+  } else {
+    res.status(401).send({ message: 'No Token' });
+  }
 };

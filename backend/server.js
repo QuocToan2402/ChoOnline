@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import userRouter from "./routers/userRouter.js";
 import productRouter from './routers/productRouter.js';
 import dotenv from 'dotenv';
+import orderRouter from "./routers/orderRouter.js";
 
 dotenv.config();
 
@@ -35,7 +36,7 @@ app.listen(port, () => {
 });
 app.use("/api/users", userRouter);
 app.use('/api/products', productRouter);
-
+app.use('/api/orders', orderRouter);
 /*
 //get list product
 app.get("/api/products", (req, res) => {
