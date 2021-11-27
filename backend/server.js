@@ -4,9 +4,16 @@ import data from "./data.js";
 import mongoose from "mongoose";
 import userRouter from "./routers/userRouter.js";
 import productRouter from './routers/productRouter.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express(); //create express server
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 //const URL = process.env.MONGODB_URL;
+
 
 //connect to mongoDB
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ECommerce", {
@@ -22,7 +29,7 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ECommerce", {
 app.get("/", (req, res) => {
   res.send("Server is ready"); //return status of server
 });
-const port = process.env.PORT || 4000; //port envỉ or 5000, run at http://
+const port = process.env.PORT || 5000; //port envỉ or 5000, run at http://
 app.listen(port, () => {
   console.log(`Server serve at http://localhost:${port}`);
 });
