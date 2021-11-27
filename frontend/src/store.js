@@ -19,7 +19,11 @@ const initialState = {
     cartItems: localStorage.getItem("cartItems") //get cartItems from localStorage by ID
       ? JSON.parse(localStorage.getItem("cartItems")) //convert from array to json
       : [],
+    shippingAddress: localStorage.getItem('shippingAddress')//check shippingaddress from local
+      ? JSON.parse(localStorage.getItem('shippingAddress'))//if exist convert to json
+      : {},//else, return null and user fill shipping input 
   },
+
 }; //
 const reducer = combineReducers({
   //add reducer
