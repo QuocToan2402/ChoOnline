@@ -15,7 +15,6 @@ app.use(express.urlencoded({ extended: true }));
 
 //const URL = process.env.MONGODB_URL;
 
-
 //connect to mongoDB
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ECommerce", {
    useNewUrlParser: true, 
@@ -25,7 +24,12 @@ mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ECommerce", {
    if(err) throw err;
    console.log('Connected to MongoDB!!!')
 });
-
+app.use("/api/users", userRouter);
+app.use('/api/products', productRouter);
+app.use('/api/orders', orderRouter);
+app.get('/api/config/paypal', (req, res) => {
+  res.send(process.env.PAYPAL_CLIENT_ID || 'sb');//'sb' is meaning sandbox
+});
 
 app.get("/", (req, res) => {
   res.send("Server is ready"); //return status of server
@@ -34,9 +38,7 @@ const port = process.env.PORT || 5000; //port envỉ or 5000, run at http://
 app.listen(port, () => {
   console.log(`Server serve at http://localhost:${port}`);
 });
-app.use("/api/users", userRouter);
-app.use('/api/products', productRouter);
-app.use('/api/orders', orderRouter);
+
 /*
 //get list product
 app.get("/api/products", (req, res) => {
