@@ -31,7 +31,7 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Back to result</Link>
+          <Link to="/">Trở lại</Link>
           <div className="row top">
             <div className="col-2">
               <img
@@ -51,9 +51,9 @@ export default function ProductScreen(props) {
                     numReviews={product.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : ${product.price}</li>
+                <li>Giá : ${product.price}</li>
                 <li>
-                  Description:
+                  Mô tả:
                   <p>{product.description}</p>
                 </li>
               </ul>
@@ -63,18 +63,18 @@ export default function ProductScreen(props) {
                 <ul>
                   <li>
                     <div className="row">
-                      <div>Price</div>
+                      <div>Giá</div>
                       <div className="price">${product.price}</div>
                     </div>
                   </li>
                   <li>
                     <div className="row">
-                      <div>Status</div>
+                      <div>Tình trạng</div>
                       <div>
                         {product.countInStock > 0 ? (
-                          <span className="success">In Stock</span>
+                          <span className="success">Còn hàng</span>
                         ) : (
-                          <span className="danger">Unavailable</span>
+                          <span className="danger">Hết hàng</span>
                         )}
                       </div>
                     </div>
@@ -84,7 +84,7 @@ export default function ProductScreen(props) {
                     <>
                       <li>
                         <div className="row">
-                          <div>Qty</div>
+                          <div>Số lượng </div>
                           <div>
                             <select
                               value={qty}
@@ -106,7 +106,7 @@ export default function ProductScreen(props) {
                           onClick={addToCartHandler}
                           className="primary block"
                         >
-                          Add to Cart
+                          Thêm vào giỏ hàng
                         </button>
                       </li>
                     </>

@@ -30,12 +30,12 @@ function App() {
         <header className="row">
           <div>
             <Link className="brand" to="/">
-              amazona
+              E-Commerce
             </Link>
           </div>
           <div>
             <Link to="/cart">
-              Cart
+              Giỏ hàng
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
@@ -48,13 +48,13 @@ function App() {
                 <ul className="dropdown-content">
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
-                      Sign Out
+                      Đăng xuất
                     </Link>
                   </li>
                 </ul>
               </div>
             ) : (
-              <Link to="/signin">Sign In</Link>
+              <Link to="/signin">Đăng nhập</Link>
             )}
           </div>
         </header>
