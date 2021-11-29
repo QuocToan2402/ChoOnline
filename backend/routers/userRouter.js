@@ -58,4 +58,15 @@ userRouter.post(
     });
   })
 );
+
+//api to return detail information of current user by id
+userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id);//find id from urls
+    if (user) {//if exist, send user
+      res.send(user);
+    } else {//if not, send message
+      res.status(404).send({ message: 'User Not Found' });
+    }
+  })
+);
 export default userRouter;

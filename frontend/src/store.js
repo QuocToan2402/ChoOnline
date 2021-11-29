@@ -11,7 +11,7 @@ import {
   productDetailsReducer,
   productListReducer,
 } from "./reducers/productReducers";
-import { userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
+import { userDetailsReducer, userRegisterReducer, userSigninReducer } from "./reducers/userReducers";
 
 const initialState = {
   //check user exist
@@ -43,6 +43,8 @@ const reducer = combineReducers({
   orderDetails: orderDetailsReducer,
   orderPay: orderPayReducer,
   orderMineList: orderMineListReducer,
+  userDetails: userDetailsReducer,
+
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // define compose cho redux devtool
 const store = createStore(
