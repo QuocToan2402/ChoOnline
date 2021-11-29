@@ -16,6 +16,7 @@ import ShippingAddressScreen from './screens/ShippingAddressScreen';
 import SigninScreen from './screens/SigninScreen';
 
 //NOTE:if use <a></a> when click will refresh, use <link> to SPA
+
 function App() {
   const cart = useSelector((state) => state.cart);//get cart items from redux
   const { cartItems } = cart;
@@ -65,6 +66,27 @@ function App() {
               </div>
             ) : (
               <Link to="/signin">Đăng nhập</Link>
+            )}
+            {userInfo && userInfo.isAdmin && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Admin <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              </div>
             )}
           </div>
         </header>
