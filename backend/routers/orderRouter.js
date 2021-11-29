@@ -4,6 +4,15 @@ import Order from '../models/orderModel.js';
 import { isAuth } from '../utils.js';
 
 const orderRouter = express.Router();
+//route to return order of current user
+orderRouter.get(
+    '/mine',
+    isAuth,
+    expressAsyncHandler(async (req, res) => {
+        const orders = await Order.find({ user: req.user._id });
+        res.send(orders);
+    })
+);
 
 orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {//use middleware to check author user
     if (req.body.orderItems.length === 0) {
@@ -39,25 +48,25 @@ orderRouter.get('/:id', isAuth, expressAsyncHandler(async (req, res) => {
 
 //update status of order, only access user can add payment
 orderRouter.put('/:id/pay', isAuth, expressAsyncHandler(async (req, res) => {
-        const order = await Order.findById(req.params.id);//find by id get from url
-        if (order) {//if have order
-            //set info of order
-            order.isPaid = true;
-            order.paidAt = Date.now();
-            order.paymentResult = {
-                //info from paypal
-                id: req.body.id,
-                status: req.body.status,
-                update_time: req.body.update_time,
-                email_address: req.body.email_address,
-            };
-            const updatedOrder = await order.save();//update info
-            res.send({ message: 'Order Paid', order: updatedOrder });
-        } else {
-            //send error
-            res.status(404).send({ message: 'Order Not Found' });
-        }
-    })
+    const order = await Order.findById(req.params.id);//find by id get from url
+    if (order) {//if have order
+        //set info of order
+        order.isPaid = true;
+        order.paidAt = Date.now();
+        order.paymentResult = {
+            //info from paypal
+            id: req.body.id,
+            status: req.body.status,
+            update_time: req.body.update_time,
+            email_address: req.body.email_address,
+        };
+        const updatedOrder = await order.save();//update info
+        res.send({ message: 'Order Paid', order: updatedOrder });
+    } else {
+        //send error
+        res.status(404).send({ message: 'Order Not Found' });
+    }
+})
 );
 
 export default orderRouter;
