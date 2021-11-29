@@ -1,25 +1,48 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { listProducts } from '../actions/productActions';
+import { createProduct, listProducts } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants';
 
 export default function ProductListScreen(props) {
     const productList = useSelector((state) => state.productList);//get list product from redux store
     const { loading, error, products } = productList;//get info list of product
+
+    const productCreate = useSelector((state) => state.productCreate);
+    const {
+        loading: loadingCreate,//rename properties
+        error: errorCreate,
+        success: successCreate,
+        product: createdProduct,
+    } = productCreate; //properties come from productCreate action result
+
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (successCreate) {// create successfully
+            dispatch({ type: PRODUCT_CREATE_RESET });
+            props.history.push(`/product/${createdProduct._id}/edit`);//redirect user to edit screen
+        }
         dispatch(listProducts());
-    }, [dispatch]);
+    }, [createdProduct, dispatch, props.history, successCreate]);
 
     const deleteHandler = () => {
         /// TODO: dispatch delete action
     };
-
+    const createHandler = () => {
+        dispatch(createProduct());//implement create product action
+    };
     return (
         <div>
-            <h1>Products</h1>
+            <div className="row">
+                <h1>Products</h1>
+                <button type="button" className="primary" onClick={createHandler}>
+                    Create New Product
+                </button>
+            </div>
+            {loadingCreate && <LoadingBox></LoadingBox>}
+            {errorCreate && <MessageBox variant="danger">{errorCreate}</MessageBox>}
             {loading ? (
                 <LoadingBox></LoadingBox>
             ) : error ? (
