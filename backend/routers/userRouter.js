@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import data from '../data.js';
 import User from '../models/userModel.js';
-import { generateToken } from '../utils.js';
+import { generateToken, isAuth } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -61,11 +61,32 @@ userRouter.post(
 
 //api to return detail information of current user by id
 userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
-    const user = await User.findById(req.params.id);//find id from urls
-    if (user) {//if exist, send user
-      res.send(user);
-    } else {//if not, send message
-      res.status(404).send({ message: 'User Not Found' });
+  const user = await User.findById(req.params.id);//find id from urls
+  if (user) {//if exist, send user
+    res.send(user);
+  } else {//if not, send message
+    res.status(404).send({ message: 'User Not Found' });
+  }
+})
+);
+
+userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
+    const user = await User.findById(req.user._id);//get uset from database by id
+    if (user) {
+      user.name = req.body.name || user.name;
+      user.email = req.body.email || user.email;
+      if (req.body.password) {//if user fill pass, hash and save
+        user.password = bcrypt.hashSync(req.body.password, 8);
+      }
+      const updatedUser = await user.save();
+      //send user info back to frontend.
+      res.send({
+        _id: updatedUser._id,
+        name: updatedUser.name,
+        email: updatedUser.email,
+        isAdmin: updatedUser.isAdmin,
+        token: generateToken(updatedUser),//update re-generate token again
+      });
     }
   })
 );
