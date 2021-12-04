@@ -24,7 +24,7 @@ export default function UserEditScreen(props) {
         success: successUpdate,
     } = userUpdate;
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch(); 
     useEffect(() => {
         if (successUpdate) {
             dispatch({ type: USER_UPDATE_RESET });//reset info
