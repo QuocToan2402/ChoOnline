@@ -21,6 +21,8 @@ import SigninScreen from './screens/SigninScreen';
 import UserEditScreen from './screens/UserEditScreen';
 import UserListScreen from './screens/UserListScreen';
 import SellerRoute from './components/SellerRoute';
+import SearchBox from './components/SearchBox';
+import SearchScreen from './screens/SearchScreen';
 
 
 //NOTE:if use <a></a> when click will refresh, use <link> to SPA
@@ -37,6 +39,10 @@ function App() {
   const signoutHandler = () => {
     dispatch(signout());
   };
+  useEffect(() => {
+    dispatch(listProductCategories());
+  }, [dispatch]);
+  
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -45,6 +51,13 @@ function App() {
             <Link className="brand" to="/">
               E-Commerce
             </Link>
+          </div>
+          <div>
+            <Route
+              render={({ history }) => (
+                <SearchBox history={history}></SearchBox>
+              )}
+            ></Route>
           </div>
           <div>
             <Link to="/cart">
@@ -124,6 +137,11 @@ function App() {
           <Route path="/placeorder" component={PlaceOrderScreen}></Route>
           <Route path="/order/:id" component={OrderScreen}></Route>
           <Route path="/orderhistory" component={OrderHistoryScreen}></Route>
+          <Route
+            path="/search/name/:name?"
+            component={SearchScreen}
+            exact
+          ></Route>
 
           <PrivateRoute
             path="/profile"
@@ -153,7 +171,7 @@ function App() {
             path="/orderlist/seller"
             component={OrderListScreen}
           ></SellerRoute>
-          
+
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">All right reserved</footer>

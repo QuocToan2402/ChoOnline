@@ -17,14 +17,16 @@ import {
   PRODUCT_UPDATE_SUCCESS,
 } from "../constants/productConstants";
 
-export const listProducts = ({ seller = '' }) => async (dispatch) => {
+export const listProducts = ({ seller = '', name = '' }) => async (dispatch) => {
   // return function
   dispatch({
     type: PRODUCT_LIST_REQUEST,
   });
   try {
     //fetch data from backend
-    const { data } = await Axios.get(`/api/products?seller=${seller}`); //sending ajax to get list products, dùng axios
+    const { data } = await Axios.get(
+      `/api/products?seller=${seller}&name=${name}`
+    );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); //success, return data, change state of redux, update screen
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message }); //false, return message.
