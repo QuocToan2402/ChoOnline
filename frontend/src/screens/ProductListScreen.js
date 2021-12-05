@@ -13,7 +13,7 @@ import {
 } from '../constants/productConstants';
 
 export default function ProductListScreen(props) {
-    const sellerMode = props.match.path.indexOf('/seller') >= 0;
+    const sellerMode = props.match.path.indexOf('/seller') >= 0;//check if current user is seller
     const productList = useSelector((state) => state.productList);//get list product from redux store
     const { loading, error, products } = productList;//get info list of product
 
@@ -45,7 +45,7 @@ export default function ProductListScreen(props) {
         if (successDelete) {//delete success
             dispatch({ type: PRODUCT_DELETE_RESET });
         }
-        dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));
+        dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));//if seller mode is true, put user info, else put empty string
     }, [
         createdProduct,
         dispatch,

@@ -109,7 +109,7 @@ export const listOrderMine = () => async (dispatch, getState) => {
     }
 };
 //admin get all order
-export const listOrders = ({ seller = '' }) => async (dispatch, getState) => {
+export const listOrders = ({ seller = '' }) => async (dispatch, getState) => {    
     dispatch({ type: ORDER_LIST_REQUEST });
     const {
         userSignin: { userInfo },

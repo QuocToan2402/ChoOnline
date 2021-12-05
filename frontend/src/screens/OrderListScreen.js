@@ -15,7 +15,7 @@ export default function OrderListScreen(props) {
         error: errorDelete,
         success: successDelete,
     } = orderDelete;
-    
+
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const dispatch = useDispatch();
