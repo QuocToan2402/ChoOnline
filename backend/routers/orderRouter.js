@@ -1,7 +1,14 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import {
+    isAdmin,
+    isAuth,
+    isSellerOrAdmin,
+    mailgun,
+    payOrderEmailTemplate,
+} from '../utils.js';
+
 
 const orderRouter = express.Router();
 //admin get all order
@@ -77,22 +84,39 @@ orderRouter.put(
     '/:id/pay',
     isAuth,
     expressAsyncHandler(async (req, res) => {
-        const order = await Order.findById(req.params.id);//find by id get from url
-        if (order) {//if have order
-            //set info of order
+        const order = await Order.findById(req.params.id).populate(
+            'user',
+            'email name'
+        );
+        if (order) {
             order.isPaid = true;
             order.paidAt = Date.now();
             order.paymentResult = {
-                //info from paypal
                 id: req.body.id,
                 status: req.body.status,
                 update_time: req.body.update_time,
                 email_address: req.body.email_address,
             };
-            const updatedOrder = await order.save();//update info
+            const updatedOrder = await order.save();
+            mailgun()
+                .messages()//send an email
+                .send(
+                    {
+                        from: 'E_COMMERCE <ecommerce@mg.yourdomain.com>',
+                        to: `${order.user.name} <${order.user.email}>`,
+                        subject: `New order ${order._id}`,
+                        html: payOrderEmailTemplate(order),
+                    },
+                    (error, body) => {
+                        if (error) {
+                            console.log(error);
+                        } else {
+                            console.log(body);
+                        }
+                    }
+                );
             res.send({ message: 'Order Paid', order: updatedOrder });
         } else {
-            //send error
             res.status(404).send({ message: 'Order Not Found' });
         }
     })
