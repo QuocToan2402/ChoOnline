@@ -28,6 +28,7 @@ import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
+import DashboardScreen from './screens/DashboardScreen';
 
 
 //NOTE:if use <a></a> when click will refresh, use <link> to SPA
@@ -210,7 +211,10 @@ function App() {
             component={ProfileScreen}
           ></PrivateRoute>
           <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
-
+          <AdminRoute
+            path="/dashboard"
+            component={DashboardScreen}
+          ></AdminRoute>
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}

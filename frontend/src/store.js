@@ -8,8 +8,9 @@ import {
   orderDetailsReducer,
   orderListReducer,
   orderMineListReducer,
-  orderPayReducer
-} from "./reducers/orderReducers";
+  orderPayReducer,
+  orderSummaryReducer,
+} from './reducers/orderReducers';
 import {
   productCategoryListReducer,
   productCreateReducer,
@@ -65,7 +66,7 @@ const reducer = combineReducers({
   productCategoryList: productCategoryListReducer,
   productReviewCreate: productReviewCreateReducer,
   userAddressMap: userAddressMapReducer,
-
+  orderSummary: orderSummaryReducer,
 
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // define compose cho redux devtool
