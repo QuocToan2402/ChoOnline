@@ -31,7 +31,7 @@ export default function HomeScreen() {
   const { loading, error, products } = productList; //value from redux list
 
   useEffect(() => {
-    dispatch(listProducts()); //dispatch action
+    dispatch(listProducts({})); //dispatch action
   }, [dispatch]);
 
   return (

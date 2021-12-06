@@ -18,6 +18,6 @@ const upload = multer({ storage });
 
 uploadRouter.post('/', isAuth, upload.single('image'), (req, res) => {//only admin can upload, 
     res.send(`/${req.file.path}`);//send file name
-});
+}); 
 
 export default uploadRouter;

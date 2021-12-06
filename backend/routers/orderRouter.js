@@ -1,12 +1,19 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from '../models/orderModel.js';
-import { isAdmin, isAuth } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
 
 const orderRouter = express.Router();
 //admin get all order
-orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find({}).populate('user', 'name');//get user name of user, populate to get id of user 
+orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? { seller } : {};
+
+    const orders = await Order.find({ ...sellerFilter }).populate(
+        'user',
+        'name'
+    );//get user name of user, populate to get id of user 
+
     //and load info from user collection and put name to order collection.  
     res.send(orders);
 })
@@ -28,6 +35,7 @@ orderRouter.post('/', isAuth, expressAsyncHandler(async (req, res) => {//use mid
         res.status(400).send({ message: 'Cart is empty' });
     } else {
         const order = new Order({//create new order
+            seller: req.body.orderItems[0].seller,
             orderItems: req.body.orderItems,
             shippingAddress: req.body.shippingAddress,
             paymentMethod: req.body.paymentMethod,
@@ -90,18 +98,18 @@ orderRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res)
 );
 //admin change deliver status
 
-orderRouter.put('/:id/deliver',isAuth,isAdmin,expressAsyncHandler(async (req, res) => {
-        const order = await Order.findById(req.params.id);//find order by id
-        if (order) {
-            order.isDelivered = true;
-            order.deliveredAt = Date.now();
+orderRouter.put('/:id/deliver', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);//find order by id
+    if (order) {
+        order.isDelivered = true;
+        order.deliveredAt = Date.now();
 
-            const updatedOrder = await order.save();
-            res.send({ message: 'Order Delivered', order: updatedOrder });
-        } else {
-            res.status(404).send({ message: 'Order Not Found' });
-        }
-    })
+        const updatedOrder = await order.save();
+        res.send({ message: 'Order Delivered', order: updatedOrder });
+    } else {
+        res.status(404).send({ message: 'Order Not Found' });
+    }
+})
 );
 
 export default orderRouter;

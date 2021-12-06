@@ -1,17 +1,19 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  createProduct,
-  deleteProduct,
-  listProducts,
+    createProduct,
+    deleteProduct,
+    listProducts,
 } from '../actions/productActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import {
-  PRODUCT_CREATE_RESET,
-  PRODUCT_DELETE_RESET,
+    PRODUCT_CREATE_RESET,
+    PRODUCT_DELETE_RESET,
 } from '../constants/productConstants';
+
 export default function ProductListScreen(props) {
+    const sellerMode = props.match.path.indexOf('/seller') >= 0;//check if current user is seller
     const productList = useSelector((state) => state.productList);//get list product from redux store
     const { loading, error, products } = productList;//get info list of product
 
@@ -31,6 +33,8 @@ export default function ProductListScreen(props) {
         success: successDelete,
     } = productDelete;
 
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -41,8 +45,16 @@ export default function ProductListScreen(props) {
         if (successDelete) {//delete success
             dispatch({ type: PRODUCT_DELETE_RESET });
         }
-        dispatch(listProducts());
-    }, [createdProduct, dispatch, props.history, successCreate, successDelete]);
+        dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));//if seller mode is true, put user info, else put empty string
+    }, [
+        createdProduct,
+        dispatch,
+        props.history,
+        sellerMode,
+        successCreate,
+        successDelete,
+        userInfo._id,
+    ]);
 
     const deleteHandler = (product) => {
         if (window.confirm('Are you sure to delete?')) {
