@@ -19,7 +19,7 @@ import {
   productReviewCreateReducer,
   productUpdateReducer,
 } from "./reducers/productReducers";
-import { userDeleteReducer, userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer, userUpdateReducer } from "./reducers/userReducers";
+import { userAddressMapReducer, userDeleteReducer, userDetailsReducer, userListReducer, userRegisterReducer, userSigninReducer, userUpdateProfileReducer, userUpdateReducer } from "./reducers/userReducers";
 
 const initialState = {
   //check user exist
@@ -64,6 +64,7 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   productCategoryList: productCategoryListReducer,
   productReviewCreate: productReviewCreateReducer,
+  userAddressMap: userAddressMapReducer,
 
 
 });

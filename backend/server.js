@@ -20,12 +20,12 @@ app.use(express.urlencoded({ extended: true }));
 
 //connect to mongoDB
 mongoose.connect(process.env.MONGODB_URL || "mongodb://localhost/ECommerce", {
-   useNewUrlParser: true, 
-   useUnifiedTopology: true,
-   //userCreateIndex: true 
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  //userCreateIndex: true 
 }, err => {
-   if(err) throw err;
-   console.log('Connected to MongoDB!!!')
+  if (err) throw err;
+  console.log('Connected to MongoDB!!!')
 });
 app.use('/api/uploads', uploadRouter);
 app.use("/api/users", userRouter);
@@ -34,12 +34,11 @@ app.use('/api/orders', orderRouter);
 app.get('/api/config/paypal', (req, res) => {
   res.send(process.env.PAYPAL_CLIENT_ID || 'sb');//'sb' is meaning sandbox
 });
+app.get('/api/config/google', (req, res) => {
+  res.send(process.env.GOOGLE_API_KEY || '');
+});
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));//set file into upload folder
-
-app.get('/', (req, res) => {
-  res.send('Server is ready');
-});
 
 app.get("/", (req, res) => {
   res.send("Server is ready"); //return status of server
