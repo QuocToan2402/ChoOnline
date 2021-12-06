@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import {
     createProduct,
     deleteProduct,
@@ -13,30 +14,30 @@ import {
 } from '../constants/productConstants';
 
 export default function ProductListScreen(props) {
+    const { pageNumber = 1 } = useParams();
+
     const sellerMode = props.match.path.indexOf('/seller') >= 0;//check if current user is seller
     const productList = useSelector((state) => state.productList);//get list product from redux store
-    const { loading, error, products } = productList;//get info list of product
+    const { loading, error, products, page, pages } = productList;//get info list of product
 
-    //create
     const productCreate = useSelector((state) => state.productCreate);
     const {
-        loading: loadingCreate,//rename properties
+        //properties
+        loading: loadingCreate,
         error: errorCreate,
         success: successCreate,
         product: createdProduct,
-    } = productCreate; //properties come from productCreate action result
-    //delete
+    } = productCreate;//properties come from productCreate action result
+
     const productDelete = useSelector((state) => state.productDelete);
     const {
         loading: loadingDelete,
         error: errorDelete,
         success: successDelete,
     } = productDelete;
-
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const dispatch = useDispatch();
-
     useEffect(() => {
         if (successCreate) {// create successfully
             dispatch({ type: PRODUCT_CREATE_RESET });
@@ -45,7 +46,9 @@ export default function ProductListScreen(props) {
         if (successDelete) {//delete success
             dispatch({ type: PRODUCT_DELETE_RESET });
         }
-        dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));//if seller mode is true, put user info, else put empty string
+        dispatch(
+            listProducts({ seller: sellerMode ? userInfo._id : '', pageNumber })//if seller mode is true, put user info, else put empty string
+        );
     }, [
         createdProduct,
         dispatch,
@@ -54,6 +57,7 @@ export default function ProductListScreen(props) {
         successCreate,
         successDelete,
         userInfo._id,
+        pageNumber,
     ]);
 
     const deleteHandler = (product) => {
@@ -69,9 +73,10 @@ export default function ProductListScreen(props) {
             <div className="row">
                 <h1>Products</h1>
                 <button type="button" className="primary" onClick={createHandler}>
-                    Create New Product
+                    Create Product
                 </button>
             </div>
+
             {loadingDelete && <LoadingBox></LoadingBox>}
             {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 
@@ -82,37 +87,60 @@ export default function ProductListScreen(props) {
             ) : error ? (
                 <MessageBox variant="danger">{error}</MessageBox>
             ) : (
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>NAME</th>
-                            <th>PRICE</th>
-                            <th>CATEGORY</th>
-                            <th>BRAND</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {products.map((product) => (
-                            <tr key={product._id}>
-                                <td>{product._id}</td>
-                                <td>{product.name}</td>
-                                <td>{product.price}</td>
-                                <td>{product.category}</td>
-                                <td>{product.brand}</td>
-                                <td>
-                                    <button type="button" className="small" onClick={() => props.history.push(`/product/${product._id}/edit`)}>
-                                        Edit
-                                    </button>
-                                    <button type="button" className="small" onClick={() => deleteHandler(product)}>
-                                        Delete
-                                    </button>
-                                </td>
+                <>
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>NAME</th>
+                                <th>PRICE</th>
+                                <th>CATEGORY</th>
+                                <th>BRAND</th>
+                                <th>ACTIONS</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            {products.map((product) => (
+                                <tr key={product._id}>
+                                    <td>{product._id}</td>
+                                    <td>{product.name}</td>
+                                    <td>{product.price}</td>
+                                    <td>{product.category}</td>
+                                    <td>{product.brand}</td>
+                                    <td>
+                                        <button
+                                            type="button"
+                                            className="small"
+                                            onClick={() =>
+                                                props.history.push(`/product/${product._id}/edit`)
+                                            }
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            type="button"
+                                            className="small"
+                                            onClick={() => deleteHandler(product)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    <div className="row center pagination">
+                        {[...Array(pages).keys()].map((x) => (
+                            <Link
+                                className={x + 1 === page ? 'active' : ''}
+                                key={x + 1}
+                                to={`/productlist/pageNumber/${x + 1}`}
+                            >
+                                {x + 1}
+                            </Link>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                </>
             )}
         </div>
     );

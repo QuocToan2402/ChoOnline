@@ -10,6 +10,8 @@ const productRouter = express.Router();
 productRouter.get(
   '/',
   expressAsyncHandler(async (req, res) => {
+    const pageSize = 5;
+    const page = Number(req.query.pageNumber) || 1;
     const name = req.query.name || '';
     const category = req.query.category || '';
     const seller = req.query.seller || '';
@@ -27,7 +29,6 @@ productRouter.get(
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
-
     //if min and max exist, 
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     //get rating number
@@ -36,11 +37,17 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-          ? { price: -1 }
-          : order === 'toprated'
-            ? { rating: -1 }
-            : { _id: -1 };
-
+        ? { price: -1 }
+        : order === 'toprated'
+        ? { rating: -1 }
+        : { _id: -1 };
+    const count = await Product.count({
+      ...sellerFilter,
+      ...nameFilter,
+      ...categoryFilter,
+      ...priceFilter,
+      ...ratingFilter,
+    });
     const products = await Product.find({
       ...sellerFilter,
       ...nameFilter,
@@ -49,8 +56,10 @@ productRouter.get(
       ...ratingFilter,
     })
       .populate('seller', 'seller.name seller.logo')
-      .sort(sortOrder);
-    res.send(products);
+      .sort(sortOrder)
+      .skip(pageSize * (page - 1))//go to next page, total pages
+      .limit(pageSize);//define page size, limit product
+    res.send({ products, page, pages: Math.ceil(count / pageSize) });//sending product,
   })
 );
 
