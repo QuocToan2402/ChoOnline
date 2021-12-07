@@ -28,12 +28,12 @@ export default function HomeScreen(props) {
     fetchData();
   }, []); //*/
   const {
-    /*name = 'all',
+    name = 'all',
     category = 'all',
     min = 0,
     max = 0,
     rating = 0,
-    order = 'newest',*/
+    order = 'newest',
     pageNumber = 1,
   } = useParams();
 
@@ -48,15 +48,15 @@ export default function HomeScreen(props) {
   }, [dispatch], pageNumber);
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
-    /*const filterCategory = filter.category || category;
+    const filterCategory = filter.category || category;
     const filterName = filter.name || name;
     const filterRating = filter.rating || rating;
     const sortOrder = filter.order || order;
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
-   */
-    return `/pageNumber/${filterPage}`;
+  
+    //return `/pageNumber/${filterPage}`;
 
   };
   return (

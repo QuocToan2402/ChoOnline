@@ -1,21 +1,19 @@
-import express from "express";
-//import { reset } from "nodemon"; //use nodemon to hot reload server
-import data from "./data.js";
-import mongoose from "mongoose";
-import userRouter from "./routers/userRouter.js";
-import productRouter from './routers/productRouter.js';
+import http from 'http';
+import { Server } from 'socket.io';
+import express from 'express';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import orderRouter from "./routers/orderRouter.js";
-import uploadRouter from "./routers/uploadRouter.js";
 import path from 'path';
-
+import productRouter from './routers/productRouter.js';
+import userRouter from './routers/userRouter.js';
+import orderRouter from './routers/orderRouter.js';
+import uploadRouter from './routers/uploadRouter.js';
 
 dotenv.config();
 
 const app = express(); //create express server
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 //const URL = process.env.MONGODB_URL;
 
 //connect to mongoDB
@@ -39,56 +37,92 @@ app.get('/api/config/google', (req, res) => {
 });
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));//set file into upload folder
-
-app.get("/", (req, res) => {
+app.use(express.static(path.join(__dirname, '/frontend/build')));
+app.get('*', (req, res) =>
+  res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
+);
+/* app.get("/", (req, res) => {
   res.send("Server is ready"); //return status of server
-});
-const port = process.env.PORT || 5000; //port envỉ or 5000, run at http://
-app.listen(port, () => {
-  console.log(`Server serve at http://localhost:${port}`);
-});
+}); */
 app.use((err, req, res, next) => {
   res.status(500).send({ message: err.message }); //return error
 });
 
-/*
-import express from 'express';
-import path from 'path';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
-import config from './config.js';
-import userRoute from './routers/userRouter';
-import productRoute from './routers/productRouter';
-import orderRoute from './routers/orderRouter';
-import uploadRoute from './routers/uploadRouter';
+const port = process.env.PORT || 5000; //port envỉ or 5000, run at http://
 
-const mongodbUrl = config.MONGODB_URL;
-mongoose
-  .connect(mongodbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .catch((error) => console.log(error.reason));
+const httpServer = http.Server(app);
+const io = new Server(httpServer, { cors: { origin: '*' } });
+const users = [];
 
-const app = express();
-app.use(bodyParser.json());
-app.use('/api/uploads', uploadRoute);
-app.use('/api/users', userRoute);
-app.use('/api/products', productRoute);
-app.use('/api/orders', orderRoute);
-app.get('/api/config/paypal', (req, res) => {
-  res.send(config.PAYPAL_CLIENT_ID);
-});
-app.get('/api/config/paypal', (req, res) => {
-  res.send(config.GOOGLE_API_KEY);
-});
-app.use('/uploads', express.static(path.join(__dirname, '/../uploads')));
-app.use(express.static(path.join(__dirname, '/../frontend/build')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/../frontend/build/index.html`));
+io.on('connection', (socket) => {
+  console.log('connection', socket.id);
+  socket.on('disconnect', () => {
+    const user = users.find((x) => x.socketId === socket.id);
+    if (user) {
+      user.online = false;
+      console.log('Offline', user.name);
+      const admin = users.find((x) => x.isAdmin && x.online);
+      if (admin) {
+        io.to(admin.socketId).emit('updateUser', user);
+      }
+    }
+  });
+  socket.on('onLogin', (user) => {
+    const updatedUser = {
+      ...user,
+      online: true,
+      socketId: socket.id,
+      messages: [],
+    };
+    const existUser = users.find((x) => x._id === updatedUser._id);
+    if (existUser) {
+      existUser.socketId = socket.id;
+      existUser.online = true;
+    } else {
+      users.push(updatedUser);
+    }
+    console.log('Online', user.name);
+    const admin = users.find((x) => x.isAdmin && x.online);
+    if (admin) {
+      io.to(admin.socketId).emit('updateUser', updatedUser);
+    }
+    if (updatedUser.isAdmin) {
+      io.to(updatedUser.socketId).emit('listUsers', users);
+    }
+  });
+
+  socket.on('onUserSelected', (user) => {
+    const admin = users.find((x) => x.isAdmin && x.online);
+    if (admin) {
+      const existUser = users.find((x) => x._id === user._id);
+      io.to(admin.socketId).emit('selectUser', existUser);
+    }
+  });
+
+  socket.on('onMessage', (message) => {
+    if (message.isAdmin) {
+      const user = users.find((x) => x._id === message._id && x.online);
+      if (user) {
+        io.to(user.socketId).emit('message', message);
+        user.messages.push(message);
+      }
+    } else {
+      const admin = users.find((x) => x.isAdmin && x.online);
+      if (admin) {
+        io.to(admin.socketId).emit('message', message);
+        const user = users.find((x) => x._id === message._id && x.online);
+        user.messages.push(message);
+      } else {
+        io.to(socket.id).emit('message', {
+          name: 'Admin',
+          body: 'Sorry. I am not online right now',
+        });
+      }
+    }
+  });
 });
 
-app.listen(config.PORT, () => {
-  console.log('Server started at http://localhost:5000');
-});*/
+
+app.listen(port, () => {
+  console.log(`Server serve at http://localhost:${port}`);
+});
