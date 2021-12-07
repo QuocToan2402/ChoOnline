@@ -6,9 +6,9 @@ import MessageBox from '../components/MessageBox';
 
 //get order list of current user
 export default function OrderHistoryScreen(props) {
-    const orderMineList = useSelector((state) => state.orderMineList);//use redux store
+    //use redux store
+    const orderMineList = useSelector((state) => state.orderMineList);
     const { loading, error, orders } = orderMineList;//from order list, get result
-
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(listOrderMine());
