@@ -7,7 +7,6 @@ import { ORDER_DELETE_RESET } from '../constants/orderConstants';
 
 export default function OrderListScreen(props) {
     //const { pageNumber = 1 } = useParams();
-
     const sellerMode = props.match.path.indexOf('/seller') >= 0;
     const orderList = useSelector((state) => state.orderList);
     const { loading, error, orders } = orderList;
@@ -23,7 +22,7 @@ export default function OrderListScreen(props) {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch({ type: ORDER_DELETE_RESET });
-        dispatch(listOrders({ seller: sellerMode ? userInfo._id : '' }));
+        dispatch(listOrders({ seller: sellerMode ? userInfo._id : '' }));//if seller is true, put user empty, else put empty string
     }, [dispatch, sellerMode, successDelete, userInfo._id]);
     const deleteHandler = (order) => {
         if (window.confirm('Are you sure to delete?')) {

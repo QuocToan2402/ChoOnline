@@ -42,7 +42,7 @@ export default function HomeScreen(props) {
   const { loading, error, products, page, pages } = productList; //value from redux list
 
   useEffect(() => {
-    dispatch(listProducts({
+    dispatch(listProducts({//if do not have any filter return all product
       pageNumber,
     })); //dispatch action
   }, [dispatch], pageNumber);

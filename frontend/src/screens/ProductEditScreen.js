@@ -15,6 +15,8 @@ export default function ProductEditScreen(props) {
     const [countInStock, setCountInStock] = useState('');
     const [brand, setBrand] = useState('');
     const [description, setDescription] = useState('');
+    const userSignin = useSelector((state) => state.userSignin);
+    const { userInfo } = userSignin;
 
     const productDetails = useSelector((state) => state.productDetails);//get info from react-redux
     const { loading, error, product } = productDetails;//get state of action
@@ -29,7 +31,12 @@ export default function ProductEditScreen(props) {
     const dispatch = useDispatch();
     useEffect(() => {
         if (successUpdate) {//update success reset info
-            props.history.push('/productlist');//push new info to list product
+            if(userInfo.isAdmin === true){
+                props.history.push('/productlist');//push new info to list product
+            }
+            else if(userInfo.isSeller === true){
+                props.history.push('/productlist/seller');//push new info to list product
+            }
         }
         if (!product || product._id !== productId || successUpdate) {//
             dispatch({ type: PRODUCT_UPDATE_RESET });//if update success reset info
@@ -63,9 +70,6 @@ export default function ProductEditScreen(props) {
     };
     const [loadingUpload, setLoadingUpload] = useState(false);
     const [errorUpload, setErrorUpload] = useState('');
-
-    const userSignin = useSelector((state) => state.userSignin);
-    const { userInfo } = userSignin;
     const uploadFileHandler = async (e) => {
         const file = e.target.files[0];
         const bodyFormData = new FormData();
