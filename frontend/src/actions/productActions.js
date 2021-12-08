@@ -24,7 +24,7 @@ import {
 } from "../constants/productConstants";
 
 export const listProducts = ({
-  pageNumber = '',
+  pageNumber = '',//filter by seller
   seller = '',
   name = '',
   category = '',

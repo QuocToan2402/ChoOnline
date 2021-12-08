@@ -27,7 +27,7 @@ productRouter.get(
         : 0;
     //some character match
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
-    const sellerFilter = seller ? { seller } : {};
+    const sellerFilter = seller ? { seller } : {};//filter by seller, if exist return seller, else turn empty string
     const categoryFilter = category ? { category } : {};
     //if min and max exist, 
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};

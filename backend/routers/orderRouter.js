@@ -21,7 +21,7 @@ orderRouter.get(
     isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
         const seller = req.query.seller || '';
-        const sellerFilter = seller ? { seller } : {};
+        const sellerFilter = seller ? { seller } : {};//only current seller can see order
 
         const orders = await Order.find({ ...sellerFilter }).populate(
             'user',
