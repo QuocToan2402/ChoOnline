@@ -28,6 +28,7 @@ productRouter.get(
     //some character match
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};//filter by seller, if exist return seller, else turn empty string
+    
     const categoryFilter = category ? { category } : {};
     //if min and max exist, 
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
@@ -37,10 +38,10 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-        ? { price: -1 }
-        : order === 'toprated'
-        ? { rating: -1 }
-        : { _id: -1 };
+          ? { price: -1 }
+          : order === 'toprated'
+            ? { rating: -1 }
+            : { _id: -1 };
     const count = await Product.count({
       ...sellerFilter,
       ...nameFilter,
@@ -49,13 +50,13 @@ productRouter.get(
       ...ratingFilter,
     });
     const products = await Product.find({
-      ...sellerFilter,
+      ...sellerFilter,//add new seller page
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
     })
-      .populate('seller', 'seller.name seller.logo')
+      .populate('seller', 'seller.name seller.logo')//add new seller page
       .sort(sortOrder)
       .skip(pageSize * (page - 1))//go to next page, total pages
       .limit(pageSize);//define page size, limit product
@@ -94,7 +95,11 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    //const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(//add new seller page
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    );
     if (product) {
       res.send(product);
     } else {
