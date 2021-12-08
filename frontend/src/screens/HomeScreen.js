@@ -6,27 +6,12 @@ import LoadingBox from "../components/LoadingBox";
 import MessageBox from "../components/MessageBox";
 import { useDispatch, useSelector } from "react-redux";
 import { listProducts } from "../actions/productActions";
+//add carousel
+import { listTopSellers } from '../actions/userActions';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import { Carousel } from 'react-responsive-carousel';
 
 export default function HomeScreen(props) {
-  /*const [products, setProducts] = useState([]); //use react hook to manage state of component, change value of product use setproduct fuc
-  const [loading, setLoading] = useState(false); //show loading 
-  const [error, setError] = useState(false);  //show error if cant't get data
-
-  useEffect(() => { //hook, run after render data, run only 1 time.
-    const fetchData = async () => {
-      try {
-        setLoading(true); //show loading before sending request
-        const { data } = await axios.get('/api/products'); //get data from axios request to server
-        setLoading(false);
-        setProducts(data);
-      } 
-      catch (err) {
-        setError(err.message);//show error if cant't get data
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []); //*/
   const {
     name = 'all',
     category = 'all',
@@ -40,12 +25,21 @@ export default function HomeScreen(props) {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList); //useSelector is function redux
   const { loading, error, products, page, pages } = productList; //value from redux list
+  
+  const userTopSellersList = useSelector((state) => state.userTopSellersList);
+  const {
+    loading: loadingSellers,
+    error: errorSellers,
+    users: sellers,
+  } = userTopSellersList;
 
   useEffect(() => {
     dispatch(listProducts({//if do not have any filter return all product
       pageNumber,
     })); //dispatch action
+    dispatch(listTopSellers());
   }, [dispatch], pageNumber);
+  
   const getFilterUrl = (filter) => {
     const filterPage = filter.page || pageNumber;
     const filterCategory = filter.category || category;
@@ -55,12 +49,32 @@ export default function HomeScreen(props) {
     const filterMin = filter.min ? filter.min : filter.min === 0 ? 0 : min;
     const filterMax = filter.max ? filter.max : filter.max === 0 ? 0 : max;
     return `/search/category/${filterCategory}/name/${filterName}/min/${filterMin}/max/${filterMax}/rating/${filterRating}/order/${sortOrder}/pageNumber/${filterPage}`;
-  
-    //return `/pageNumber/${filterPage}`;
 
+    //return `/pageNumber/${filterPage}`;
   };
   return (
     <div>
+      <h2>Top Sellers</h2>
+      {loadingSellers ? (
+        <LoadingBox></LoadingBox>
+      ) : errorSellers ? (
+        <MessageBox variant="danger">{errorSellers}</MessageBox>
+      ) : (
+        <>
+          {sellers.length === 0 && <MessageBox>No Seller Found</MessageBox>}
+          <Carousel showArrows autoPlay showThumbs={false}>
+            {sellers.map((seller) => (
+              <div key={seller._id}>
+                <Link to={`/seller/${seller._id}`}>
+                  <img src={seller.seller.logo} alt={seller.seller.name} />
+                  <p className="legend">{seller.seller.name}</p>
+                </Link>
+              </div>
+            ))}
+          </Carousel>
+        </>
+      )}
+      <h2>Featured Products</h2>
       {loading ? ( //if loading true, render loading component
         <LoadingBox></LoadingBox>
       ) : error ? ( // if has error, render message
