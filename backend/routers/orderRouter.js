@@ -142,6 +142,15 @@ orderRouter.put(
                 update_time: req.body.update_time,
                 email_address: req.body.email_address,
             };
+            console.log(order.orderItems.length);
+
+            for (let i = 0; i < order.orderItems.length; i++) {
+                var product = await Product.findById(order.orderItems[i].product)
+                if (product) {
+                    product.countInStock = product.countInStock - order.orderItems[i].qty
+                }
+                await product.save()
+            }
             const updatedOrder = await order.save();
             mailgun()
                 .messages()//send an email
