@@ -37,12 +37,12 @@ productRouter.get(
       order === 'lowest'
         ? { price: 1 }
         : order === 'highest'
-        ? { price: -1 }
-        : order === 'toprated'
-        ? { rating: -1 }
-        : { _id: -1 };
+          ? { price: -1 }
+          : order === 'toprated'
+            ? { rating: -1 }
+            : { _id: -1 };
     const count = await Product.count({
-      ...sellerFilter,
+      ...sellerFilter,//add seller page
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
@@ -55,7 +55,7 @@ productRouter.get(
       ...priceFilter,
       ...ratingFilter,
     })
-      .populate('seller', 'seller.name seller.logo')
+      .populate('seller', 'seller.name seller.logo')//add seller page
       .sort(sortOrder)
       .skip(pageSize * (page - 1))//go to next page, total pages
       .limit(pageSize);//define page size, limit product
@@ -94,7 +94,11 @@ productRouter.get(
 productRouter.get(
   '/:id',
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    //const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate(
+      'seller',
+      'seller.name seller.logo seller.rating seller.numReviews'
+    );
     if (product) {
       res.send(product);
     } else {
