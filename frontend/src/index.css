@@ -70,9 +70,11 @@ button {
   border-radius: 0.5rem;
   border: 0.1rem #a4a4a4 solid;
   font-size: 1.6rem;
+  
   font-family: Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 button {
   background-color: #f8f8f8;
@@ -86,6 +88,7 @@ button:hover {
 }
 button.primary {
   background-color: #f0c040;
+  font-weight: bold;
 }
 button.block {
   width: 100%;
@@ -153,6 +156,7 @@ aside {
 }
 aside.open {
   transform: translateX(0);
+  opacity: 0.95;
 }
 button.open-sidebar {
   font-size: 3rem;
@@ -309,7 +313,7 @@ img.large {
 }
 /* Carousel */
 .carousel .slide img {
-  max-width: 30rem;
+  max-width: 40rem;
 }
 
 /* Search */
@@ -392,7 +396,6 @@ img.large {
 .summary-title.color3 {
   background-color: #e0e0f0;
 }
-
 /* Chatbox */
 .chatbox {
   color: #000000;
@@ -480,8 +483,8 @@ footer {
   width: 100%;
   text-align: left;
   font: bold 16px sans-serif;
-
   padding: 200px;
+  padding-top: 20px;
 }
 
 .footer-distributed .footer-left,
@@ -497,7 +500,7 @@ footer {
 
 .footer-distributed h3 {
   color: #ffffff;
-  font: normal 36px "Cookie", cursive;
+  font: normal 36px, cursive;
   margin: 0;
 }
 
@@ -522,7 +525,7 @@ footer {
   color: #8f9296;
   font-size: 14px;
   font-weight: normal;
-  margin: 0;
+  margin-top: 10px;
 }
 
 .footer-distributed .footer-center {
@@ -628,4 +631,42 @@ footer {
     line-height: normal;
     font-size: auto;
   }
+}
+.mail_to{
+  color: white;
+}
+.custom-title{
+  text-align: center;
+  font-size: 34px;
+}
+.custom-header{
+  margin-left: 30px;
+    color: #505050;
+}
+.editbtn{
+  background-color: #008CBA;
+  color: #ffff;
+  font-weight: BOLD;
+}
+.Delbtn{
+  background-color: #c94545;
+  color: #ffff;
+  font-weight: BOLD;
+}
+.margin4{
+  margin-left: 4%;
+}
+.margin5{
+  margin-left: 5%;
+}
+.lablepad{
+  margin: 3em;
+  font-weight: bold;
+
+}
+#comment{
+  height: 150px;
+}
+#searchtb{
+  width: 300px;
 }

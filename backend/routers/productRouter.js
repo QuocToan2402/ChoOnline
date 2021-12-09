@@ -114,16 +114,16 @@ productRouter.post( // add product
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({ //create a new product
-      name: 'sample name ' + Date.now(),
+      name: 'New name ' + Date.now(),
       seller: req.user._id,
       image: '/images/p1.jpg',
       price: 0,
-      category: 'sample category',
-      brand: 'sample brand',
+      category: 'New category',
+      brand: 'New brand',
       countInStock: 0,
       rating: 0,
       numReviews: 0,
-      description: 'sample description',
+      description: 'Description',
     });
     const createdProduct = await product.save();
     res.send({ message: 'Product Created', product: createdProduct });
@@ -178,7 +178,7 @@ productRouter.post(
       if (product.reviews.find((x) => x.name === req.user.name)) {
         return res
           .status(400)
-          .send({ message: 'You already submitted a review' });//every user can review 1 product 1 time.
+          .send({ message: 'Bạn đã nhận xét cho sản phẩm này!' });//every user can review 1 product 1 time.
       }
       const review = {
         name: req.user.name,

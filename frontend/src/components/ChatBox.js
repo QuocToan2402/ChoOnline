@@ -13,7 +13,7 @@ export default function ChatBox(props) {
     const [isOpen, setIsOpen] = useState(false);
     const [messageBody, setMessageBody] = useState('');
     const [messages, setMessages] = useState([
-        { name: 'Admin', body: 'Hello there, Please ask your question.' },
+        { name: 'Admin', body: 'Xin chào, tôi có thể giúp gì cho bạn?' },
     ]);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function ChatBox(props) {
     const submitHandler = (e) => {
         e.preventDefault();
         if (!messageBody.trim()) {
-            alert('Error. Please type message.');
+            alert('Lỗi. Hãy nhập tin nhắn.');
         } else {
             setMessages([...messages, { body: messageBody, name: userInfo.name }]);
             setMessageBody('');
@@ -66,12 +66,12 @@ export default function ChatBox(props) {
         <div className="chatbox">
             {!isOpen ? (
                 <button type="button" onClick={supportHandler}>
-                    <i className="fa fa-support" />
+                    <i class="fa fa-comments"></i>
                 </button>
             ) : (
                 <div className="card card-body">
                     <div className="row">
-                        <strong>Support </strong>
+                        <strong>Trợ giúp</strong>
                         <button type="button" onClick={closeHandler}>
                             <i className="fa fa-close" />
                         </button>
@@ -89,7 +89,7 @@ export default function ChatBox(props) {
                                 value={messageBody}
                                 onChange={(e) => setMessageBody(e.target.value)}
                                 type="text"
-                                placeholder="nhập ở đây"
+                                placeholder="Nhập tin nhắn ở đây"
                             />
                             <button type="submit">Send</button>
                         </form>

@@ -66,6 +66,7 @@ export default function CartScreen(props) {
                   <div>
                     <button
                       type="button"
+                      className="Delbtn"
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       Xoá sản phẩm

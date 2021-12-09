@@ -58,7 +58,7 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Trở về</Link>
+          <Link to="/" className='lablepad'>Trở về</Link>
           <div className="row top">
             <div className="col-2">
               <img
@@ -80,7 +80,7 @@ export default function ProductScreen(props) {
                 </li>
                 <li>Giá : ${product.price}</li>
                 <li>
-                  Mô tả:
+                  Mô tả sản phẩm:
                   <p>{product.description}</p>
                 </li>
               </ul>
@@ -89,7 +89,7 @@ export default function ProductScreen(props) {
               <div className="card card-body">
                 <ul>
                   <li>
-                    Seller{' '}
+                    Người bán{' '}
                     <h2>
                       <Link to={`/seller/${product.seller._id}`}>
                         {product.seller.seller.name}
@@ -155,13 +155,13 @@ export default function ProductScreen(props) {
             </div>
           </div>
           <div>
-            <h2 id="reviews">Reviews</h2>
+            <h2 id="reviews" className='margin4'>Reviews</h2>
             {product.reviews.length === 0 && (
               <MessageBox>Hiện tại không có nhận xét nào</MessageBox>
             )}
             <ul>
               {product.reviews.map((review) => (
-                <li key={review._id}>
+                <li key={review._id} className='margin5'>
                   <strong>{review.name}</strong>
                   <Rating rating={review.rating} caption=" "></Rating>
                   <p>{review.createdAt.substring(0, 10)}</p>
@@ -172,21 +172,21 @@ export default function ProductScreen(props) {
                 {userInfo ? (
                   <form className="form" onSubmit={submitHandler}>
                     <div>
-                      <h2>Viết nhận xét</h2>
+                      <h2 className='custom-title'>Viết nhận xét</h2>
                     </div>
                     <div>
-                      <label htmlFor="rating">Rating</label>
+                      <label htmlFor="rating">Đánh giá</label>
                       <select
                         id="rating"
                         value={rating}
                         onChange={(e) => setRating(e.target.value)}
                       >
-                        <option value="">Select...</option>
-                        <option value="1">1- Tệ</option>
-                        <option value="2">2- Bình thường</option>
-                        <option value="3">3- Tốt</option>
-                        <option value="4">4- Rất tốt</option>
-                        <option value="5">5- Tuyệt vời</option>
+                        <option value="">Chọn...</option>
+                        <option value="1">1 - Tệ</option>
+                        <option value="2">2 - Bình thường</option>
+                        <option value="3">3 - Tốt</option>
+                        <option value="4">4 - Rất tốt</option>
+                        <option value="5">5 - Tuyệt vời</option>
                       </select>
                     </div>
                     <div>
@@ -195,12 +195,13 @@ export default function ProductScreen(props) {
                         id="comment"
                         value={comment}
                         onChange={(e) => setComment(e.target.value)}
+                        rows="4" cols="50"
                       ></textarea>
                     </div>
                     <div>
                       <label />
                       <button className="primary" type="submit">
-                        Submit
+                        Gửi
                       </button>
                     </div>
                     <div>
@@ -214,7 +215,7 @@ export default function ProductScreen(props) {
                   </form>
                 ) : (
                   <MessageBox>
-                    Please <Link to="/signin">Đăng nhập</Link> để viết nhận xét
+                    Vui lòng <Link to="/signin">Đăng nhập</Link> để viết nhận xét
                   </MessageBox>
                 )}
               </li>
