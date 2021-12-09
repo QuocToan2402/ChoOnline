@@ -45,11 +45,11 @@ export default function UserListScreen(props) {
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>NAME</th>
+                            <th>TÊN</th>
                             <th>EMAIL</th>
                             <th>IS SELLER</th>
                             <th>IS ADMIN</th>
-                            <th>ACTIONS</th>
+                            <th>TÙY CHỌN</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,14 +66,14 @@ export default function UserListScreen(props) {
                                         className="small"
                                         onClick={() => props.history.push(`/user/${user._id}/edit`)}
                                     >
-                                        Edit
+                                        SỬA
                                     </button>
                                     <button
                                         type="button"
                                         className="small"
                                         onClick={() => deleteHandler(user)}
                                     >
-                                        Delete
+                                        XÓA
                                     </button>
                                 </td>
                             </tr>

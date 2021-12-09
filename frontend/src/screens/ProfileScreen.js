@@ -67,7 +67,7 @@ export default function ProfileScreen() {
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    <h1>User Profile</h1>
+                    <h1>Thông tin người dùng</h1>
                 </div>
                 {loading ? (
                     <LoadingBox></LoadingBox>
@@ -81,15 +81,15 @@ export default function ProfileScreen() {
                         )}
                         {successUpdate && (
                             <MessageBox variant="success">
-                                Profile Updated Successfully!
+                                Chỉnh sửa thành công!
                             </MessageBox>
                         )}
                         <div>
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Tên</label>
                             <input
                                 id="name"
                                 type="text"
-                                placeholder="Enter name"
+                                placeholder="tên"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             ></input>
@@ -99,26 +99,26 @@ export default function ProfileScreen() {
                             <input
                                 id="email"
                                 type="email"
-                                placeholder="Enter email"
+                                placeholder="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             ></input>
                         </div>
                         <div>
-                            <label htmlFor="password">Password</label>
+                            <label htmlFor="password">Mật khẩu</label>
                             <input
                                 id="password"
                                 type="password"
-                                placeholder="Enter password"
+                                placeholder="mật khẩu"
                                 onChange={(e) => setPassword(e.target.value)}
                             ></input>
                         </div>
                         <div>
-                            <label htmlFor="confirmPassword">confirm Password</label>
+                            <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
                             <input
                                 id="confirmPassword"
                                 type="password"
-                                placeholder="Enter confirm password"
+                                placeholder="xác nhận mật khẩu"
                                 onChange={(e) => setConfirmPassword(e.target.value)}
                             ></input>
                         </div>
@@ -126,11 +126,11 @@ export default function ProfileScreen() {
                             <>
                                 <h2>Seller</h2>
                                 <div>
-                                    <label htmlFor="sellerName">Seller Name</label>
+                                    <label htmlFor="sellerName">Tên seller</label>
                                     <input
                                         id="sellerName"
                                         type="text"
-                                        placeholder="Enter Seller Name"
+                                        placeholder="tên seller"
                                         value={sellerName}
                                         onChange={(e) => setSellerName(e.target.value)}
                                     ></input>
@@ -140,17 +140,17 @@ export default function ProfileScreen() {
                                     <input
                                         id="sellerLogo"
                                         type="text"
-                                        placeholder="Enter Seller Logo"
+                                        placeholder="Seller Logo"
                                         value={sellerLogo}
                                         onChange={(e) => setSellerLogo(e.target.value)}
                                     ></input>
                                 </div>
                                 <div>
-                                    <label htmlFor="sellerDescription">Seller Description</label>
+                                    <label htmlFor="sellerDescription">Miêu tả</label>
                                     <input
                                         id="sellerDescription"
                                         type="text"
-                                        placeholder="Enter Seller Description"
+                                        placeholder="miêu tả"
                                         value={sellerDescription}
                                         onChange={(e) => setSellerDescription(e.target.value)}
                                     ></input>
@@ -160,7 +160,7 @@ export default function ProfileScreen() {
                         <div>
                             <label />
                             <button className="primary" type="submit">
-                                Update
+                                Lưu
                             </button>
                         </div>
                     </>

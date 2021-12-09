@@ -2,7 +2,7 @@ import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import data from '../data.js';
 import Product from '../models/productModel.js';
-import { isAdmin, isAuth, isSellerOrAdmin } from '../utils.js';
+import { isAdmin, isAuth, isSellerOrAdmin } from '../middleware.js';
 import User from '../models/userModel.js';
 
 const productRouter = express.Router();
@@ -87,7 +87,7 @@ productRouter.get( //get product from data.js
     } else {
       res
         .status(500)
-        .send({ message: 'No seller found. first run /api/users/seed' });
+        .send({ message: 'Hiện không có seller nào. first run /api/users/seed' });
     }
   })
 );

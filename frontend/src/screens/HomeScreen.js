@@ -54,7 +54,7 @@ export default function HomeScreen(props) {
   };
   return (
     <div>
-      <h2>Top Sellers</h2>
+      <h2>Top Seller</h2>
       {loadingSellers ? (
         <LoadingBox></LoadingBox>
       ) : errorSellers ? (
@@ -74,7 +74,7 @@ export default function HomeScreen(props) {
           </Carousel>
         </>
       )}
-      <h2>Featured Products</h2>
+      <h2>Sản Phẩm</h2>
       {loading ? ( //if loading true, render loading component
         <LoadingBox></LoadingBox>
       ) : error ? ( // if has error, render message
@@ -83,7 +83,7 @@ export default function HomeScreen(props) {
         // after loading and no error, render product
         <>
           {products.length === 0 && (
-            <MessageBox>No Product Found</MessageBox>
+            <MessageBox>Hiện ko có sản phẩm nào</MessageBox>
           )}
           <div className="row center">
             {products.map((product) => (

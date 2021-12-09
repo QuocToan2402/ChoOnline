@@ -93,7 +93,7 @@ export default function CartScreen(props) {
                 className="primary block"
                 disabled={cartItems.length === 0}
               >
-                Proceed to Checkout
+                Tiếp tục thanh toán
               </button>
             </li>
           </ul>

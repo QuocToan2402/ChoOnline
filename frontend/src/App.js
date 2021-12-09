@@ -92,10 +92,10 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/profile">User Profile</Link>
+                    <Link to="/profile">Thông tin</Link>
                   </li>
                   <li>
-                    <Link to="/orderhistory">Order History</Link>
+                    <Link to="/orderhistory">Hóa đơn đã đặt</Link>
                   </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
@@ -114,10 +114,10 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/productlist/seller">Products</Link>
+                    <Link to="/productlist/seller">Sản phẩm</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist/seller">Orders</Link>
+                    <Link to="/orderlist/seller">Hóa đơn</Link>
                   </li>
                 </ul>
               </div>
@@ -129,19 +129,19 @@ function App() {
                 </Link>
                 <ul className="dropdown-content">
                   <li>
-                    <Link to="/dashboard">Dashboard</Link>
+                    <Link to="/dashboard">Trang chủ</Link>
                   </li>
                   <li>
-                    <Link to="/productlist">Products</Link>
+                    <Link to="/productlist">Sản phẩm</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist">Orders</Link>
+                    <Link to="/orderlist">Hóa đơn</Link>
                   </li>
                   <li>
-                    <Link to="/userlist">Users</Link>
+                    <Link to="/userlist">Người dùng</Link>
                   </li>
                   <li>
-                    <Link to="/support">Support</Link>
+                    <Link to="/support">Hỗ trợ</Link>
                   </li>
                 </ul>
               </div>
@@ -151,7 +151,7 @@ function App() {
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
-              <strong>Categories</strong>
+              <strong>Loại</strong>
               <button
                 onClick={() => setSidebarIsOpen(false)}
                 className="close-sidebar"
@@ -261,40 +261,30 @@ function App() {
         {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
 
           <div class="footer-left">
-            <h3>WebDev<span>Trick</span></h3>
+            <h3>Mua hàng trực tuyến</h3>
             <p class="footer-links">
               <a href="#">Home</a>
-              ·
-              <a href="#">Blog</a>
-              ·
-              <a href="#">Pricing</a>
-              ·
-              <a href="#">About</a>
-              ·
-              <a href="#">Faq</a>
-              ·
-              <a href="#">Contact</a>
             </p>
-            <p class="footer-company-name">webdevtrick &copy; 2019</p>
+            <p class="footer-company-name">Shoping Online</p>
           </div>
           <div class="footer-center">
             <div>
               <i class="fa fa-map-marker"></i>
-              <p><span>21 Revolution Street</span> Delhi, India</p>
+              <p><span>1 Võ Văn Ngân</span> TpHCM, Việt Nam</p>
             </div>
             <div>
               <i class="fa fa-phone"></i>
-              <p>+1 555 123456</p>
+              <p>+0 000 00000</p>
             </div>
             <div>
               <i class="fa fa-envelope"></i>
-              <p><a href="mailto:support@company.com">contact@webdevtrick.com</a></p>
+              <p><a>shopingonline@gmail.com</a></p>
             </div>
           </div>
           <div class="footer-right">
             <p class="footer-company-about">
-              <span>About the company</span>
-              Web Dev Trick is a blog for web designers, graphic designers, web developers &amp; SEO Learner.
+              <span>Về công ty</span>
+              Công ty mua bán hàng trực tuyến
             </p>
             <div class="footer-icons">
               <a href="#"><i class="fa fa-facebook"></i></a>

@@ -6,7 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import Product from '../components/Product';
 import Rating from '../components/Rating';
-import { prices, ratings } from '../utils';
+import { prices, ratings } from '../filter';
 
 export default function SearchScreen(props) {
     const {
@@ -60,7 +60,7 @@ export default function SearchScreen(props) {
                 ) : error ? (
                     <MessageBox variant="danger">{error}</MessageBox>
                 ) : (
-                    <div>{products.length} Results</div>
+                    <div>{products.length} Kết quả</div>
                 )}
                 <div>
                     Sort by{' '}
@@ -70,16 +70,16 @@ export default function SearchScreen(props) {
                             props.history.push(getFilterUrl({ order: e.target.value }));
                         }}
                     >
-                        <option value="newest">Newest Arrivals</option>
-                        <option value="lowest">Price: Low to High</option>
-                        <option value="highest">Price: High to Low</option>
-                        <option value="toprated">Avg. Customer Reviews</option>
+                        <option value="newest">Hàng mới</option>
+                        <option value="lowest">Giá: Thấp tới cao</option>
+                        <option value="highest">Giá: Cao tới thấp</option>
+                        <option value="toprated">Đánh giá của khách</option>
                     </select>
                 </div>
             </div>
             <div className="row top">
                 <div className="col-1">
-                    <h3>Department</h3>
+                    <h3>Mẫu tìm kiếm có sẵn</h3>
                     <div>
                         {loadingCategories ? (
                             <LoadingBox></LoadingBox>
@@ -92,7 +92,7 @@ export default function SearchScreen(props) {
                                         className={'all' === category ? 'active' : ''}
                                         to={getFilterUrl({ category: 'all' })}
                                     >
-                                        Any
+                                        Bất kỳ
                                     </Link>
                                 </li>
                                 {categories.map((c) => (
@@ -109,7 +109,7 @@ export default function SearchScreen(props) {
                         )}
                     </div>
                     <div>
-                        <h3>Price</h3>
+                        <h3>Giá</h3>
                         <ul>
                             {prices.map((p) => (
                                 <li key={p.name}>
@@ -126,7 +126,7 @@ export default function SearchScreen(props) {
                         </ul>
                     </div>
                     <div>
-                        <h3>Avg. Customer Review</h3>
+                        <h3>Đánh giá khách hàng</h3>
                         <ul>
                             {ratings.map((r) => (
                                 <li key={r.name}>
@@ -149,7 +149,7 @@ export default function SearchScreen(props) {
                     ) : (
                         <>
                             {products.length === 0 && (
-                                <MessageBox>No Product Found</MessageBox>
+                                <MessageBox>Hiện ko có sản phẩm nào</MessageBox>
                             )}
                             <div className="row center">
                                 {products.map((product) => (

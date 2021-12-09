@@ -36,7 +36,7 @@ export default function ShippingAddressScreen(props) {
     let moveOn = true;
     if (!newLat || !newLng) {
       moveOn = window.confirm(
-        'You did not set your location on map. Continue?'
+        'Bạn chưa chọn vị trí của bạn trên bản đồ, bạn muốn tiếp tục?'
       );
     }
     if (moveOn) {
@@ -73,25 +73,25 @@ export default function ShippingAddressScreen(props) {
       <CheckoutSteps step1 step2></CheckoutSteps>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Shipping Address</h1>
+          <h1>Địa chỉ giao hàng</h1>
         </div>
         <div>
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="fullName">Họ và Tên</label>
           <input
             type="text"
             id="fullName"
-            placeholder="Enter full name"
+            placeholder="họ và tên"
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             required
           ></input>
         </div>
         <div>
-          <label htmlFor="address">Address</label>
+          <label htmlFor="address">Địa chỉ</label>
           <input
             type="text"
             id="address"
-            placeholder="Enter address"
+            placeholder="Nhập địa chỉ"
             value={address}
             onChange={(e) => setAddress(e.target.value)}
             required
@@ -102,7 +102,7 @@ export default function ShippingAddressScreen(props) {
           <input
             type="text"
             id="city"
-            placeholder="Enter city"
+            placeholder="thành phố"
             value={city}
             onChange={(e) => setCity(e.target.value)}
             required
@@ -113,7 +113,7 @@ export default function ShippingAddressScreen(props) {
           <input
             type="text"
             id="postalCode"
-            placeholder="Enter postal code"
+            placeholder="postal code"
             value={postalCode}
             onChange={(e) => setPostalCode(e.target.value)}
             required
@@ -124,7 +124,7 @@ export default function ShippingAddressScreen(props) {
           <input
             type="text"
             id="country"
-            placeholder="Enter country"
+            placeholder="quốc gia"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
             required

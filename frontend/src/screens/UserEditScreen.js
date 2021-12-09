@@ -49,7 +49,7 @@ export default function UserEditScreen(props) {
         <div>
             <form className="form" onSubmit={submitHandler}>
                 <div>
-                    <h1>Edit User {name}</h1>
+                    <h1>Sửa thông tin {name}</h1>
                     {loadingUpdate && <LoadingBox></LoadingBox>}
                     {errorUpdate && (
                         <MessageBox variant="danger">{errorUpdate}</MessageBox>
@@ -62,11 +62,11 @@ export default function UserEditScreen(props) {
                 ) : (
                     <>
                         <div>
-                            <label htmlFor="name">Name</label>
+                            <label htmlFor="name">Tên</label>
                             <input
                                 id="name"
                                 type="text"
-                                placeholder="Enter name"
+                                placeholder="tên"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
                             ></input>
@@ -76,7 +76,7 @@ export default function UserEditScreen(props) {
                             <input
                                 id="email"
                                 type="email"
-                                placeholder="Enter email"
+                                placeholder="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             ></input>

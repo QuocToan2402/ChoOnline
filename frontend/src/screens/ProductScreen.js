@@ -58,7 +58,7 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Back to result</Link>
+          <Link to="/">Trở về</Link>
           <div className="row top">
             <div className="col-2">
               <img
@@ -157,7 +157,7 @@ export default function ProductScreen(props) {
           <div>
             <h2 id="reviews">Reviews</h2>
             {product.reviews.length === 0 && (
-              <MessageBox>There is no review</MessageBox>
+              <MessageBox>Hiện tại không có nhận xét nào</MessageBox>
             )}
             <ul>
               {product.reviews.map((review) => (
@@ -172,7 +172,7 @@ export default function ProductScreen(props) {
                 {userInfo ? (
                   <form className="form" onSubmit={submitHandler}>
                     <div>
-                      <h2>Write a customer review</h2>
+                      <h2>Viết nhận xét</h2>
                     </div>
                     <div>
                       <label htmlFor="rating">Rating</label>
@@ -182,15 +182,15 @@ export default function ProductScreen(props) {
                         onChange={(e) => setRating(e.target.value)}
                       >
                         <option value="">Select...</option>
-                        <option value="1">1- Poor</option>
-                        <option value="2">2- Fair</option>
-                        <option value="3">3- Good</option>
-                        <option value="4">4- Very good</option>
-                        <option value="5">5- Excelent</option>
+                        <option value="1">1- Tệ</option>
+                        <option value="2">2- Bình thường</option>
+                        <option value="3">3- Tốt</option>
+                        <option value="4">4- Rất tốt</option>
+                        <option value="5">5- Tuyệt vời</option>
                       </select>
                     </div>
                     <div>
-                      <label htmlFor="comment">Comment</label>
+                      <label htmlFor="comment">Nhận xét</label>
                       <textarea
                         id="comment"
                         value={comment}
@@ -214,7 +214,7 @@ export default function ProductScreen(props) {
                   </form>
                 ) : (
                   <MessageBox>
-                    Please <Link to="/signin">Sign In</Link> to write a review
+                    Please <Link to="/signin">Đăng nhập</Link> để viết nhận xét
                   </MessageBox>
                 )}
               </li>

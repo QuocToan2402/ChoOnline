@@ -1,6 +1,6 @@
 import multer from 'multer';
 import express from 'express';
-import { isAuth } from '../utils.js';
+import { isAuth } from '../middleware.js';
 
 const uploadRouter = express.Router();//implement express
 

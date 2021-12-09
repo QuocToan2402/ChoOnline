@@ -9,7 +9,7 @@ import {
     isSellerOrAdmin,
     mailgun,
     payOrderEmailTemplate,
-} from '../utils.js';
+} from '../middleware.js';
 
 
 const orderRouter = express.Router();

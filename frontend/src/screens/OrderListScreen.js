@@ -31,7 +31,7 @@ export default function OrderListScreen(props) {
     };
     return (
         <div>
-            <h1>Orders</h1>
+            <h1>Đặt hàng</h1>
             {loadingDelete && <LoadingBox></LoadingBox>}
             {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
             {loading ? (
@@ -44,11 +44,11 @@ export default function OrderListScreen(props) {
                         <tr>
                             <th>ID</th>
                             <th>USER</th>
-                            <th>DATE</th>
-                            <th>TOTAL</th>
-                            <th>PAID</th>
-                            <th>DELIVERED</th>
-                            <th>ACTIONS</th>
+                            <th>NGÀY</th>
+                            <th>TỔNG</th>
+                            <th>THANH TOÁN</th>
+                            <th>GIAO HÀNG</th>
+                            <th>TÙY CHỌN</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,14 +72,14 @@ export default function OrderListScreen(props) {
                                             props.history.push(`/order/${order._id}`);
                                         }}
                                     >
-                                        Details
+                                        CHI TIẾT
                                     </button>
                                     <button
                                         type="button"
                                         className="small"
                                         onClick={() => deleteHandler(order)}
                                     >
-                                        Delete
+                                        XÓA
                                     </button>
                                 </td>
                             </tr>

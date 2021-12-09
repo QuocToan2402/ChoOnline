@@ -71,9 +71,9 @@ export default function ProductListScreen(props) {
     return (
         <div>
             <div className="row">
-                <h1>Products</h1>
+                <h1>Sản Phẩm</h1>
                 <button type="button" className="primary" onClick={createHandler}>
-                    Create Product
+                    Thêm sản phẩm
                 </button>
             </div>
 
@@ -92,11 +92,11 @@ export default function ProductListScreen(props) {
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>NAME</th>
-                                <th>PRICE</th>
-                                <th>CATEGORY</th>
-                                <th>BRAND</th>
-                                <th>ACTIONS</th>
+                                <th>TÊN</th>
+                                <th>GIÁ</th>
+                                <th>LOẠI</th>
+                                <th>HÃNG</th>
+                                <th>TÙY CHỌN</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -115,14 +115,14 @@ export default function ProductListScreen(props) {
                                                 props.history.push(`/product/${product._id}/edit`)
                                             }
                                         >
-                                            Edit
+                                            SỬA
                                         </button>
                                         <button
                                             type="button"
                                             className="small"
                                             onClick={() => deleteHandler(product)}
                                         >
-                                            Delete
+                                            XÓA
                                         </button>
                                     </td>
                                 </tr>

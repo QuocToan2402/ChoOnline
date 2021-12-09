@@ -15,7 +15,7 @@ export default function DashboardScreen() {
     return (
         <div>
             <div className="row">
-                <h1>Dashboard</h1>
+                <h1>Trang chủ</h1>
             </div>
             {loading ? (
                 <LoadingBox />
@@ -45,7 +45,7 @@ export default function DashboardScreen() {
                         <li>
                             <div className="summary-title color3">
                                 <span>
-                                    <i className="fa fa-money" /> Sales
+                                    <i className="fa fa-money" /> Khuyến mãi
                                 </span>
                             </div>
                             <div className="summary-body">
@@ -60,7 +60,7 @@ export default function DashboardScreen() {
                         <div>
                             <h2>Sales</h2>
                             {summary.dailyOrders.length === 0 ? (
-                                <MessageBox>No Sale</MessageBox>
+                                <MessageBox>Không có chương trình khuyến mãi nào</MessageBox>
                             ) : (
                                 <Chart
                                     width="100%"
@@ -78,13 +78,13 @@ export default function DashboardScreen() {
                     <div>
                         <h2>Categories</h2>
                         {summary.productCategories.length === 0 ? (
-                            <MessageBox>No Category</MessageBox>
+                            <MessageBox>Hiện không có sản phẩm nào</MessageBox>
                         ) : (
                             <Chart
                                 width="100%"
                                 height="400px"
                                 chartType="PieChart"
-                                loader={<div>Loading Chart</div>}
+                                loader={<div>Loading</div>}
                                 data={[
                                     ['Category', 'Products'],
                                     ...summary.productCategories.map((x) => [x._id, x.count]),
