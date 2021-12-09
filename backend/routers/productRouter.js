@@ -7,7 +7,7 @@ import User from '../models/userModel.js';
 
 const productRouter = express.Router();
 
-productRouter.get(
+productRouter.get( // get all products and filter
   '/',
   expressAsyncHandler(async (req, res) => {
     const pageSize = 5;
@@ -64,7 +64,7 @@ productRouter.get(
   })
 );
 
-productRouter.get(
+productRouter.get( //get all product from database
   '/categories',
   expressAsyncHandler(async (req, res) => {
     const categories = await Product.find().distinct('category');
@@ -72,7 +72,7 @@ productRouter.get(
   })
 );
 
-productRouter.get(
+productRouter.get( //get product from data.js
   '/seed',
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
@@ -92,7 +92,7 @@ productRouter.get(
   })
 );
 
-productRouter.get(
+productRouter.get( //get product by productId
   '/:id',
   expressAsyncHandler(async (req, res) => {
     //const product = await Product.findById(req.params.id);
@@ -108,12 +108,12 @@ productRouter.get(
   })
 );
 
-productRouter.post(
+productRouter.post( // add product
   '/',
   isAuth,
   isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
-    const product = new Product({
+    const product = new Product({ //create a new product
       name: 'sample name ' + Date.now(),
       seller: req.user._id,
       image: '/images/p1.jpg',
@@ -129,7 +129,7 @@ productRouter.post(
     res.send({ message: 'Product Created', product: createdProduct });
   })
 );
-productRouter.put(
+productRouter.put( //update product
   '/:id',
   isAuth,
   isSellerOrAdmin,
@@ -152,7 +152,7 @@ productRouter.put(
   })
 );
 
-productRouter.delete(
+productRouter.delete( //delete product
   '/:id',
   isAuth,
   isSellerOrAdmin,
@@ -173,7 +173,7 @@ productRouter.post(
   isAuth,
   expressAsyncHandler(async (req, res) => {
     const productId = req.params.id;
-    const product = await Product.findById(productId);
+    const product = await Product.findById(productId); // get by productId
     if (product) {
       if (product.reviews.find((x) => x.name === req.user.name)) {
         return res
@@ -185,12 +185,10 @@ productRouter.post(
         rating: Number(req.body.rating),
         comment: req.body.comment,
       };
-      product.reviews.push(review);
+      product.reviews.push(review); // push comment
       product.numReviews = product.reviews.length;
-      product.rating =
-        product.reviews.reduce((a, c) => c.rating + a, 0) /
-        product.reviews.length;
-      const updatedProduct = await product.save();
+      product.rating = product.reviews.reduce((a, c) => c.rating + a, 0) / product.reviews.length; //calculate rating
+      const updatedProduct = await product.save(); // update product
       res.status(201).send({
         message: 'Review Created',
         review: updatedProduct.reviews[updatedProduct.reviews.length - 1],

@@ -7,7 +7,7 @@ import { generateToken, isAdmin, isAuth } from '../utils.js';
 
 const userRouter = express.Router();
 
-userRouter.get(
+userRouter.get( // get topSellers products
   '/top-sellers',
   expressAsyncHandler(async (req, res) => {
     const topSellers = await User.find({ isSeller: true })
@@ -17,7 +17,7 @@ userRouter.get(
   })
 );
 
-userRouter.get(
+userRouter.get( // get users from data.js
   "/seed",
   //"/admin",
   expressAsyncHandler(async (req, res) => {
@@ -28,7 +28,7 @@ userRouter.get(
   })
 );
 //
-userRouter.post(//
+userRouter.post( // login
   '/signin',
   expressAsyncHandler(async (req, res) => {
     //ajax request to check user in database/.
@@ -51,7 +51,7 @@ userRouter.post(//
   })
 );
 //sign up action
-userRouter.post(
+userRouter.post( // register user
   '/register',
   expressAsyncHandler(async (req, res) => {
     const user = new User({
@@ -81,7 +81,7 @@ userRouter.get('/:id', expressAsyncHandler(async (req, res) => {
   }
 })
 );
-
+//user update profile
 userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);//get user from database by id
   if (user) {
@@ -131,7 +131,7 @@ userRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) 
   }
 })
 );
-
+//admin update user
 userRouter.put(
   '/:id',
   isAuth,

@@ -115,7 +115,7 @@ orderRouter.get(
     '/:id',
     isAuth,
     expressAsyncHandler(async (req, res) => {
-        const order = await Order.findById(req.params.id);
+        const order = await Order.findById(req.params.id); //get by id
         if (order) {
             res.send(order);
         } else {
@@ -144,14 +144,14 @@ orderRouter.put(
             };
             console.log(order.orderItems.length);
 
-            for (let i = 0; i < order.orderItems.length; i++) {
+            for (let i = 0; i < order.orderItems.length; i++) { //decrease the number of product in stock
                 var product = await Product.findById(order.orderItems[i].product)
                 if (product) {
                     product.countInStock = product.countInStock - order.orderItems[i].qty
                 }
                 await product.save()
             }
-            const updatedOrder = await order.save();
+            const updatedOrder = await order.save(); //save order
             mailgun()
                 .messages()//send an email
                 .send(
@@ -202,7 +202,6 @@ orderRouter.put(
         if (order) {
             order.isDelivered = true;
             order.deliveredAt = Date.now();
-
             const updatedOrder = await order.save();
             res.send({ message: 'Order Delivered', order: updatedOrder });
         } else {
