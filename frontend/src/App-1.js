@@ -32,20 +32,17 @@ import DashboardScreen from './screens/DashboardScreen';
 import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
 
-
-//NOTE:if use <a></a> when click will refresh, use <link> to SPA
 function App() {
-  const cart = useSelector((state) => state.cart);//get cart items from redux
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);//default is close, hook for sidebar
+  const cart = useSelector((state) => state.cart);
+  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const { cartItems } = cart;
-  //get user infor to header
   const userSignin = useSelector((state) => state.userSignin);
   const { userInfo } = userSignin;
   const dispatch = useDispatch();
-  //sign out
   const signoutHandler = () => {
     dispatch(signout());
   };
+
   const productCategoryList = useSelector((state) => state.productCategoryList);
   const {
     loading: loadingCategories,
@@ -55,7 +52,6 @@ function App() {
   useEffect(() => {
     dispatch(listProductCategories());
   }, [dispatch]);
-
   return (
     <BrowserRouter>
       <div className="grid-container">
@@ -69,7 +65,7 @@ function App() {
               <i className="fa fa-bars"></i>
             </button>
             <Link className="brand" to="/">
-              E-Commerce
+              amazona
             </Link>
           </div>
           <div>
@@ -81,12 +77,12 @@ function App() {
           </div>
           <div>
             <Link to="/cart">
-              Giỏ hàng
+              Cart
               {cartItems.length > 0 && (
                 <span className="badge">{cartItems.length}</span>
               )}
             </Link>
-            {userInfo ? (//get user infor and render to header
+            {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
                   {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
@@ -100,13 +96,13 @@ function App() {
                   </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
-                      Đăng xuất
+                      Sign Out
                     </Link>
                   </li>
                 </ul>
               </div>
             ) : (
-              <Link to="/signin">Đăng nhập</Link>
+              <Link to="/signin">Sign In</Link>
             )}
             {userInfo && userInfo.isSeller && (
               <div className="dropdown">
@@ -180,9 +176,14 @@ function App() {
           </ul>
         </aside>
         <main>
+          <Route path="/seller/:id" component={SellerScreen}></Route>
           <Route path="/cart/:id?" component={CartScreen}></Route>
           <Route path="/product/:id" component={ProductScreen} exact></Route>
-          <Route path="/product/:id/edit" component={ProductEditScreen} exact ></Route>
+          <Route
+            path="/product/:id/edit"
+            component={ProductEditScreen}
+            exact
+          ></Route>
           <Route path="/signin" component={SigninScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
           <Route path="/shipping" component={ShippingAddressScreen}></Route>
@@ -210,16 +211,11 @@ function App() {
             component={SearchScreen}
             exact
           ></Route>
-
           <PrivateRoute
             path="/profile"
             component={ProfileScreen}
           ></PrivateRoute>
           <PrivateRoute path="/map" component={MapScreen}></PrivateRoute>
-          <AdminRoute
-            path="/dashboard"
-            component={DashboardScreen}
-          ></AdminRoute>
           <AdminRoute
             path="/productlist"
             component={ProductListScreen}
@@ -235,12 +231,18 @@ function App() {
             component={OrderListScreen}
             exact
           ></AdminRoute>
+          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
           <AdminRoute
             path="/user/:id/edit"
             component={UserEditScreen}
           ></AdminRoute>
-          <AdminRoute path="/userlist" component={UserListScreen}></AdminRoute>
+
+          <AdminRoute
+            path="/dashboard"
+            component={DashboardScreen}
+          ></AdminRoute>
           <AdminRoute path="/support" component={SupportScreen}></AdminRoute>
+
           <SellerRoute
             path="/productlist/seller"
             component={ProductListScreen}
@@ -251,10 +253,10 @@ function App() {
           ></SellerRoute>
 
           <Route path="/" component={HomeScreen} exact></Route>
-        </main> 
-        <footer className="footer-distributed row">
-        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
+          {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
           <div>All right reserved</div>{' '}
+        </main>
+        <footer className="footer-distributed row">
           <div class="footer-left">
             <h3>WebDev<span>Trick</span></h3>
             <p class="footer-links">
@@ -298,7 +300,7 @@ function App() {
               <a href="#"><i class="fa fa-github"></i></a>
             </div>
           </div>
-        </footer>     
+        </footer>
       </div>
     </BrowserRouter>
   );

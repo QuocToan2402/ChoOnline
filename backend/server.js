@@ -11,6 +11,7 @@ import uploadRouter from './routers/uploadRouter.js';
 
 dotenv.config();
 
+
 const app = express(); //create express server
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -53,6 +54,8 @@ const port = process.env.PORT || 5000; //port envỉ or 5000, run at http://
 const httpServer = http.Server(app);
 const io = new Server(httpServer, { cors: { origin: '*' } });
 const users = [];
+
+
 
 io.on('connection', (socket) => {
   console.log('connection', socket.id);
