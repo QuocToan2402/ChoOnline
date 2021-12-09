@@ -23,7 +23,7 @@ orderRouter.get(
         const seller = req.query.seller || '';
         const sellerFilter = seller ? { seller } : {};//only current seller can see order
 
-        const orders = await Order.find({ ...sellerFilter }).populate(
+        const orders = await Order.find({ ...sellerFilter, deleted: false }).populate(
             'user',
             'name'
         );//get user name of user, populate to get id of user 
@@ -35,7 +35,7 @@ orderRouter.get(
     '/mine',
     isAuth,
     expressAsyncHandler(async (req, res) => {//use middleware to check author user
-        const orders = await Order.find({ user: req.user._id });
+        const orders = await Order.find({deleted: false, user: req.user._id });
         res.send(orders);
     })
 );
@@ -180,11 +180,11 @@ orderRouter.put(
 orderRouter.delete(
     '/:id',
     isAuth,
-    isAdmin,
+    isSellerOrAdmin,
     expressAsyncHandler(async (req, res) => {
         const order = await Order.findById(req.params.id);
         if (order) {//if exist, call del func, send 
-            const deleteOrder = await order.remove();
+            const deleteOrder = await order.delete();
             res.send({ message: 'Order Deleted', order: deleteOrder });
         } else {
             res.status(404).send({ message: 'Order Not Found' });

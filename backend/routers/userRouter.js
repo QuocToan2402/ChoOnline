@@ -112,7 +112,7 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
 
 //admin get all user in collection
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
-  const users = await User.find({});
+  const users = await User.find({deleted: false });
   res.send(users);
 })
 );
@@ -124,7 +124,7 @@ userRouter.delete('/:id', isAuth, isAdmin, expressAsyncHandler(async (req, res) 
       res.status(400).send({ message: 'Can Not Delete Admin User' });
       return;
     }
-    const deleteUser = await user.remove();
+    const deleteUser = await user.delete();
     res.send({ message: 'User Deleted', user: deleteUser });
   } else {
     res.status(404).send({ message: 'User Not Found' });

@@ -1,4 +1,6 @@
 import mongoose from 'mongoose';
+import MongooseDel from 'mongoose-delete';
+
 const reviewSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -27,6 +29,9 @@ const productSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+productSchema.plugin(MongooseDel, {
+  deletedAt: true,
+})
 const Product = mongoose.model('Product', productSchema);
 
 export default Product;

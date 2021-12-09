@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import MongooseDel from 'mongoose-delete';
 
 const userSchema = new mongoose.Schema(
   {
@@ -19,5 +20,8 @@ const userSchema = new mongoose.Schema(
     timestamps: true,//create record and last update record
   }
 );
+userSchema.plugin(MongooseDel, {
+  deletedAt: true,
+})
 const User = mongoose.model("User", userSchema);
 export default User;
