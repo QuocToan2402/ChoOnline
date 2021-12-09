@@ -54,6 +54,7 @@ productRouter.get(
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
+      deleted: false 
     })
       .populate('seller', 'seller.name seller.logo')//add seller page
       .sort(sortOrder)
@@ -154,11 +155,11 @@ productRouter.put(
 productRouter.delete(
   '/:id',
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if (product) {
-      const deleteProduct = await product.remove();
+      const deleteProduct = await product.delete();
       res.send({ message: 'Product Deleted', product: deleteProduct });
     } else {
       res.status(404).send({ message: 'Product Not Found' });

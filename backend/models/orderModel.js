@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import MongooseDel from 'mongoose-delete';
 
 const orderSchema = new mongoose.Schema(
     {
@@ -46,5 +47,8 @@ const orderSchema = new mongoose.Schema(
         timestamps: true,
     }
 );
+orderSchema.plugin(MongooseDel, {
+    deletedAt: true,
+})
 const Order = mongoose.model('Order', orderSchema);
 export default Order;
