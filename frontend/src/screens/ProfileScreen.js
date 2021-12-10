@@ -4,6 +4,8 @@ import { detailsUser, updateUserProfile } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import Axios from 'axios';
+
 
 //NOTE: profile screen is a private route
 export default function ProfileScreen() {
@@ -15,12 +17,13 @@ export default function ProfileScreen() {
     const [sellerName, setSellerName] = useState('');
     const [sellerLogo, setSellerLogo] = useState('');
     const [sellerDescription, setSellerDescription] = useState('');
-
+    const [image, setImage] = useState('');
     const userSignin = useSelector((state) => state.userSignin);//redux store
     const { userInfo } = userSignin;//get user info from user signin
     const userDetails = useSelector((state) => state.userDetails);//get user from redux
     const { loading, error, user } = userDetails;//get detail info from be
-
+    const [loadingUpload, setLoadingUpload] = useState(false);
+    const [errorUpload, setErrorUpload] = useState('');
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile);//get info from redux
     const {
         success: successUpdate,
@@ -63,6 +66,27 @@ export default function ProfileScreen() {
             );
         }
     };
+
+    const uploadFileHandler = async (e) => {
+        const file = e.target.files[0];
+        const bodyFormData = new FormData();
+        bodyFormData.append('image', file);
+        setLoadingUpload(true);
+        try {
+            const { data } = await Axios.post('/api/uploads', bodyFormData, {//data from upload api
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${userInfo.token}`,
+                },
+            });
+            setSellerLogo(data);//set date
+            setLoadingUpload(false);//set effect loading
+        } catch (error) {
+            setErrorUpload(error.message);
+            setLoadingUpload(false);
+        }
+    };
+
     return (
         <div>
             <form className="form" onSubmit={submitHandler}>
@@ -144,6 +168,19 @@ export default function ProfileScreen() {
                                         value={sellerLogo}
                                         onChange={(e) => setSellerLogo(e.target.value)}
                                     ></input>
+                                </div>
+                                <div>
+                                    <label htmlFor="imageFile">Image File</label>
+                                    <input
+                                        type="file"
+                                        id="imageFile"
+                                        label="Choose Image"
+                                        onChange={uploadFileHandler}
+                                    ></input>
+                                    {loadingUpload && <LoadingBox></LoadingBox>}
+                                    {errorUpload && (
+                                        <MessageBox variant="danger">{errorUpload}</MessageBox>
+                                    )}
                                 </div>
                                 <div>
                                     <label htmlFor="sellerDescription">Miêu tả</label>
