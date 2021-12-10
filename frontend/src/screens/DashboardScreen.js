@@ -45,7 +45,7 @@ export default function DashboardScreen() {
                         <li>
                             <div className="summary-title color3">
                                 <span>
-                                    <i className="fa fa-money" /> Khuyến mãi
+                                    <i className="fa fa-money" /> Doanh thu
                                 </span>
                             </div>
                             <div className="summary-body">
@@ -60,7 +60,7 @@ export default function DashboardScreen() {
                         <div>
                             <h2>Sales</h2>
                             {summary.dailyOrders.length === 0 ? (
-                                <MessageBox>Không có chương trình khuyến mãi nào</MessageBox>
+                                <MessageBox>Không có số liệu</MessageBox>
                             ) : (
                                 <Chart
                                     width="100%"
