@@ -35,7 +35,7 @@ orderRouter.get(
     '/mine',
     isAuth,
     expressAsyncHandler(async (req, res) => {//use middleware to check author user
-        const orders = await Order.find({deleted: false, user: req.user._id });
+        const orders = await Order.find({ deleted: false, user: req.user._id });
         res.send(orders);
     })
 );

@@ -69,6 +69,7 @@ export default function UserEditScreen(props) {
                                 placeholder="tên"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
+                                disabled
                             ></input>
                         </div>
                         <div>
@@ -79,6 +80,7 @@ export default function UserEditScreen(props) {
                                 placeholder="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                disabled
                             ></input>
                         </div>
                         <div>

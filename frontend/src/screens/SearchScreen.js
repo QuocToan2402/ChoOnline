@@ -60,10 +60,10 @@ export default function SearchScreen(props) {
                 ) : error ? (
                     <MessageBox variant="danger">{error}</MessageBox>
                 ) : (
-                    <div>{products.length} Kết quả</div>
+                    <div> Có {products.length} kết quả được tìm thấy</div>
                 )}
                 <div>
-                    Sort by{' '}
+                    Sắp xếp theo:{' '}
                     <select
                         value={order}
                         onChange={(e) => {
@@ -79,7 +79,7 @@ export default function SearchScreen(props) {
             </div>
             <div className="row top">
                 <div className="col-1">
-                    <h3>Mẫu tìm kiếm có sẵn</h3>
+                    <h3>Danh mục sản phẩm</h3>
                     <div>
                         {loadingCategories ? (
                             <LoadingBox></LoadingBox>
@@ -109,7 +109,7 @@ export default function SearchScreen(props) {
                         )}
                     </div>
                     <div>
-                        <h3>Giá</h3>
+                        <h3>Mức giá</h3>
                         <ul>
                             {prices.map((p) => (
                                 <li key={p.name}>
@@ -149,7 +149,7 @@ export default function SearchScreen(props) {
                     ) : (
                         <>
                             {products.length === 0 && (
-                                <MessageBox>Hiện ko có sản phẩm nào</MessageBox>
+                                <MessageBox>Hiện không có sản phẩm nào được tìm thấy</MessageBox>
                             )}
                             <div className="row center">
                                 {products.map((product) => (

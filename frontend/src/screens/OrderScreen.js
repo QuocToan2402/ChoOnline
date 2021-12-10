@@ -87,7 +87,7 @@ export default function OrderScreen(props) {
                     <ul>
                         <li>
                             <div className="card card-body">
-                                <h2>Giao hàng</h2>
+                                <h2>Thông tin giao hàng</h2>
                                 <p>
                                     <strong>Tên:</strong> {order.shippingAddress.fullName} <br />
                                     <strong>Địa chỉ: </strong> {order.shippingAddress.address},
@@ -97,7 +97,7 @@ export default function OrderScreen(props) {
                                 </p>
                                 {order.isDelivered ? (
                                     <MessageBox variant="success">
-                                        Giao tại {order.deliveredAt}
+                                        Giao hàng lúc: {order.deliveredAt}
                                     </MessageBox>
                                 ) : (
                                     <MessageBox variant="danger">Chưa giao hàng</MessageBox>
@@ -112,7 +112,7 @@ export default function OrderScreen(props) {
                                 </p>
                                 {order.isPaid ? (
                                     <MessageBox variant="success">
-                                       Trả bằng {order.paidAt}
+                                        Thanh toán lúc: {order.paidAt}
                                     </MessageBox>
                                 ) : (
                                     <MessageBox variant="danger">Chưa thanh toán</MessageBox>

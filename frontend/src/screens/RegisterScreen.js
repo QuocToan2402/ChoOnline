@@ -36,7 +36,7 @@ export default function RegisterScreen(props) {
     <div>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Đăng ký</h1>
+          <h1 className="custom-title" >Đăng ký</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -55,7 +55,7 @@ export default function RegisterScreen(props) {
           <input
             type="email"
             id="email"
-            placeholder="email"
+            placeholder="Nhập email"
             required
             onChange={(e) => setEmail(e.target.value)}
           ></input>
@@ -65,7 +65,7 @@ export default function RegisterScreen(props) {
           <input
             type="password"
             id="password"
-            placeholder="mật khẩu"
+            placeholder="Nhập mật khẩu"
             required
             onChange={(e) => setPassword(e.target.value)}
           ></input>
@@ -75,7 +75,7 @@ export default function RegisterScreen(props) {
           <input
             type="password"
             id="confirmPassword"
-            placeholder="xác nhận mật khẩu"
+            placeholder="Xác nhận mật khẩu"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>

@@ -95,7 +95,7 @@ function App() {
                     <Link to="/profile">Thông tin</Link>
                   </li>
                   <li>
-                    <Link to="/orderhistory">Hóa đơn đã đặt</Link>
+                    <Link to="/orderhistory">Đơn hàng</Link>
                   </li>
                   <li>
                     <Link to="#signout" onClick={signoutHandler}>
@@ -117,7 +117,7 @@ function App() {
                     <Link to="/productlist/seller">Sản phẩm</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist/seller">Hóa đơn</Link>
+                    <Link to="/orderlist/seller">Đơn hàng</Link>
                   </li>
                 </ul>
               </div>
@@ -135,7 +135,7 @@ function App() {
                     <Link to="/productlist">Sản phẩm</Link>
                   </li>
                   <li>
-                    <Link to="/orderlist">Hóa đơn</Link>
+                    <Link to="/orderlist">Đơn hàng</Link>
                   </li>
                   <li>
                     <Link to="/userlist">Người dùng</Link>
@@ -151,7 +151,7 @@ function App() {
         <aside className={sidebarIsOpen ? 'open' : ''}>
           <ul className="categories">
             <li>
-              <strong>Loại</strong>
+              <strong>DANH MỤC SẢN PHẨM</strong>
               <button
                 onClick={() => setSidebarIsOpen(false)}
                 className="close-sidebar"
@@ -261,36 +261,43 @@ function App() {
         {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo} />}
 
           <div class="footer-left">
-            <h3>Mua hàng trực tuyến</h3>
-            <p class="footer-links">
-              <a href="#">Home</a>
-            </p>
-            <p class="footer-company-name">Shoping Online</p>
+            <h3>E-Commerce - Gì cũng có, mua hết với E-Commerce</h3>
+            <div>
+              <a class="footer-company-name" href="#">Mua sắm - Buôn bán đơn giản an toàn</a>
+            </div>
+            <div>
+              <a class="footer-company-name" href="#">Hàng hiệu giá tốt tại E-Commerce</a>
+            </div>
           </div>
           <div class="footer-center">
             <div>
               <i class="fa fa-map-marker"></i>
-              <p><span>1 Võ Văn Ngân</span> TpHCM, Việt Nam</p>
+              <p>1 Võ Văn Ngân, TpHCM, Việt Nam</p>
             </div>
             <div>
               <i class="fa fa-phone"></i>
-              <p>+0 000 00000</p>
+              <p>+84 935 824 964</p>
             </div>
             <div>
               <i class="fa fa-envelope"></i>
-              <p><a>shopingonline@gmail.com</a></p>
+              <a class="mail_to" href={`mailto:toanpham0224@gmail.com`}>Trung tâm trợ giúp</a>
             </div>
           </div>
           <div class="footer-right">
-            <p class="footer-company-about">
-              <span>Về công ty</span>
-              Công ty mua bán hàng trực tuyến
+            <p>
+              <a class="mail_to">Giới thiệu về E-Commerce</a>
             </p>
             <div class="footer-icons">
               <a href="#"><i class="fa fa-facebook"></i></a>
               <a href="#"><i class="fa fa-twitter"></i></a>
               <a href="#"><i class="fa fa-linkedin"></i></a>
               <a href="#"><i class="fa fa-github"></i></a>
+            </div>
+            <div class="footer-icons">
+              <a href="#"><i class="fa fa-cc-visa"></i></a>
+              <a href="#"><i class="fa fa-cc-mastercard"></i></a>
+              <a href="#"><i class="fa fa-cc-jcb"></i></a>
+              <a href="#"><i class="fa fa-registered"></i></a>
             </div>
           </div>
         </footer>     

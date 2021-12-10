@@ -34,26 +34,26 @@ export default function SigninScreen(props) {
     <div>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Đăng nhập</h1>
+          <h1 className="custom-title" >Đăng nhập</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            placeholder="email"
+            placeholder="Nhập địa chỉ email"
             required
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Mật khẩu</label>
           <input
             type="password"
             id="password"
-            placeholder="mật khẩu"
+            placeholder="Nhập mật khẩu"
             required
             onChange={(e) => setPassword(e.target.value)}
           ></input>
@@ -67,7 +67,7 @@ export default function SigninScreen(props) {
         <div>
           <label />
           <div>
-            Chưa có tài khoản?{' '}
+            Bạn chưa có tài khoản?{' '}
             <Link to={`/register?redirect=${redirect}`}>
               Đăng ký
             </Link>

@@ -12,8 +12,9 @@ export default function SearchBox(props) {
             <div className="row">
                 <input
                     type="text"
+                    id='searchtb'
                     name="q"
-                    id="q"
+                    placeholder='Tìm kiếm trên E-Commerce'
                     onChange={(e) => setName(e.target.value)}
                 ></input>
                 <button className="primary" type="submit">
