@@ -122,10 +122,10 @@ io.on('connection', (socket) => {
   });
 });
 
-httpServer.listen(port, () => {
+httpServer.listen(process.env.PORT ||port, () => {
   console.log(`Serve at http://localhost:${port}`);
 });
-
+//app.listen (process.env.PORT || 3000);
 /* app.listen(port, () => {
   console.log(`Server serve at http://localhost:${port}`);
 }); */
