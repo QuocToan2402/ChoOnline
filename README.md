@@ -7,6 +7,7 @@
 -  http://localhost:5000/api/users/seed
 -  http://localhost:5000/api/products/seed
 -  Để tạo cơ sở dữ liệu
+# Chạy Frontend
 - Tiếp theo, trong thư mục frontend, mở terminal và chạy
   * npm install
   * Npm start
